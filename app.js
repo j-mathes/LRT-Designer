@@ -822,15 +822,18 @@ function wizardStep3(w) {
     </div>
   </div>`;
 
-  // Court count
+  // Courts input — only relevant for Sort & Sift
   const maxCourts = 10;
   const courts = w.courts || 1;
-  const courtsHtml = `
+  const courtsHtml = method === 'sortSift' ? `
   <div class="form-group">
     <label class="form-label" for="w-courts">Number of Courts Available</label>
     <input class="form-input" id="w-courts" type="number" min="1" max="${maxCourts}"
       value="${courts}" style="max-width:120px">
-    <div class="form-hint">How many courts can run simultaneously?</div>
+    <div class="form-hint">Used to determine how many groups to create.</div>
+  </div>` : `
+  <div class="alert alert-info" style="margin-bottom:0"><span class="alert-icon">&#8505;</span>
+    <span>For Single Closed Cell, the schedule itself determines the number of courts required — choose the option that matches your available courts below.</span>
   </div>`;
 
   // Schedule suggestion
@@ -838,7 +841,7 @@ function wizardStep3(w) {
 
   return `<h3 class="text-lg font-bold mb-4" style="color:var(--clr-primary)">Tournament Format</h3>
   <div class="alert alert-info"><span class="alert-icon">&#8505;</span>
-    <span>${pluralize(count,'player')} entered. Choose format and courts.</span>
+    <span>${pluralize(count,'player')} entered. Choose format and method.</span>
   </div>
   ${methodHtml}${fmtHtml}${courtsHtml}
   <div id="schedSuggestions">${schedHtml}</div>`;
@@ -1033,7 +1036,9 @@ function collectStep1() {
 function collectStep3() {
   const method  = document.querySelector('input[name="w-method"]:checked')?.value || 'single';
   const format  = document.querySelector('input[name="w-format"]:checked')?.value || 'doubles';
-  const courts  = parseInt(document.getElementById('w-courts')?.value) || 1;
+  // courts input only rendered for sortSift; keep existing value for single
+  const courtsEl = document.getElementById('w-courts');
+  const courts  = courtsEl ? (parseInt(courtsEl.value) || 1) : (App.state.wData.courts || 1);
   return { method, format, courts };
 }
 function collectStep4() {
