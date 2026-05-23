@@ -1164,43 +1164,45 @@ function viewTournamentDetail() {
 
 //  Schedule Tab 
 function tabSchedule(t) {
+  const outNote = `<p class="text-sm text-muted mb-3"><strong>Out</strong> &mdash; the listed player(s) sit out that round and should officiate (referee/supply balls). Every player rotates through sitting out across the schedule.</p>`;
   const html = t.rounds.map((round, ri) =>
     round.groups.map((group, gi) => {
       const sched = SCHEDULES[group.scheduleId];
       const showGroupLabel = t.rounds.length > 1 || round.groups.length > 1;
-      const header = showGroupLabel ? `<h3 class="text-lg font-bold mt-4 mb-2" style="color:var(--clr-primary)">${escHtml(round.label)}  Group ${escHtml(group.label)}</h3>` : '';
-      const rows = buildScheduleRows(group, sched);
-      return header + `<div class="table-wrapper mb-4">
-        <table class="data-table schedule-table">
-          <thead><tr>
-            <th>Round</th><th>Court</th><th>Team 1</th><th>vs</th><th>Team 2</th><th>Out</th>
-          </tr></thead>
-          <tbody>${rows}</tbody>
-        </table></div>`;
+      const header = showGroupLabel ? `<h3 class="text-lg font-bold mt-4 mb-2" style="color:var(--clr-primary)">${escHtml(round.label)} &mdash; Group ${escHtml(group.label)}</h3>` : '';
+      return header + `<div class="table-wrapper mb-4">${buildScheduleTable(group, sched)}</div>`;
     }).join('')
   ).join('');
-  return html || '<div class="empty-state"><p>No schedule generated.</p></div>';
+  return outNote + (html || '<div class="empty-state"><p>No schedule generated.</p></div>');
 }
 
-function buildScheduleRows(group, sched) {
+function buildScheduleTable(group, sched) {
   if (!sched) return '';
-  const rows = [];
-  sched.rounds.forEach(r => {
-    r.slots.forEach(slot => {
-      const names1 = slot.t1.map(pos => escHtml(playerName(group, pos))).join(' / ');
-      const names2 = slot.t2.map(pos => escHtml(playerName(group, pos))).join(' / ');
-      const outNames = slot.out.map(pos => escHtml(playerName(group, pos))).join(', ');
-      rows.push(`<tr>
-        <td><span class="badge badge-primary">${escHtml(r.label)}</span></td>
-        <td class="court-cell">Court ${slot.court}</td>
-        <td class="teams-cell">${names1}</td>
-        <td class="text-muted">vs</td>
-        <td class="teams-cell">${names2}</td>
-        <td>${outNames?`<span class="out-badge">${outNames} out</span>`:''}</td>
-      </tr>`);
-    });
-  });
-  return rows.join('');
+  const maxCourt = Math.max(...sched.rounds.flatMap(r => r.slots.map(s => s.court)));
+  const courtHeaders = Array.from({length: maxCourt}, (_, i) =>
+    `<th>Court ${i + 1}</th>`).join('');
+
+  const rows = sched.rounds.map(r => {
+    const courtCells = Array.from({length: maxCourt}, (_, i) => {
+      const slot = r.slots.find(s => s.court === i + 1);
+      if (!slot) return '<td class="text-muted" style="text-align:center">--</td>';
+      const t1 = slot.t1.map(pos => escHtml(playerName(group, pos))).join(' / ');
+      const t2 = slot.t2.map(pos => escHtml(playerName(group, pos))).join(' / ');
+      return `<td class="teams-cell">${t1} <span class="text-muted">vs</span> ${t2}</td>`;
+    }).join('');
+    const outPlayers = [...new Set(r.slots.flatMap(s => s.out))]
+      .map(pos => escHtml(playerName(group, pos))).join(', ');
+    return `<tr>
+      <td><span class="badge badge-primary">${escHtml(r.label)}</span></td>
+      ${courtCells}
+      <td>${outPlayers ? `<span class="out-badge">${outPlayers}</span>` : ''}</td>
+    </tr>`;
+  }).join('');
+
+  return `<table class="data-table schedule-table">
+    <thead><tr><th>Round</th>${courtHeaders}<th>Out</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
 }
 
 function playerName(group, pos) {
