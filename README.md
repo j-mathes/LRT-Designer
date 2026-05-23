@@ -1,9 +1,63 @@
 # Linear Ranking Tournament Designer
 
-A browser-based tournament organizer for running **Bjerring Linear Ranking Tournaments** — a round-robin scheduling system that objectively ranks all players from best to poorest based purely on competition results.
+A static web app for organizing **Bjerring Linear Ranking Tournaments** — a round-robin system that objectively ranks all players by competition results.
 
-> **License:** CC BY-NC-SA 4.0 · Copyright © 2026 Jared Mathes  
-> Based on the Bjerring Linear Ranking Tournament system.
+**[Live App](https://j-mathes.github.io/LRT-Designer/)** · CC BY-NC-SA 4.0 · © 2026 Jared Mathes
+
+---
+
+## Usage
+
+Open `index.html` in any modern browser — no server or build step required. Can also be hosted on GitHub Pages.
+
+---
+
+## Features
+
+- 5-step tournament wizard with quick-add numbered players or named roster
+- 9 built-in schedules: 4–25 players, doubles (2v2) or triples (3v3), 1–5 courts
+- Two methods: **Single Closed Cell** (one group) or **Sort & Sift** (multi-round, re-grouped by rank)
+- Live score entry with automatic standings (sorted by W → points differential)
+- Print-ready schedule sheets, scoresheets, and rule sheets
+- Export: JSON, CSV, XLSX (standings); full app backup/restore
+- Data stored in `localStorage` (IndexedDB fallback); no account needed
+
+---
+
+## Built-in Schedules
+
+| Players | Type    | Courts | Games |
+|---------|---------|--------|-------|
+| 4       | Doubles | 1      | 3     |
+| 5       | Doubles | 1      | 5     |
+| 7       | Triples | 1      | 7     |
+| 8       | Doubles | 2      | 7     |
+| 9       | Triples | 1      | 12    |
+| 12      | Doubles | 2      | 17    |
+| 12      | Doubles | 3      | 11    |
+| 16      | Doubles | 4      | 15    |
+| 25      | Doubles | 5      | 30    |
+
+Other player counts use Sort & Sift to split into groups.
+
+---
+
+## Files
+
+```
+index.html          — app shell
+app.js              — all logic (vanilla ES6+, no frameworks)
+styles.css          — all styles
+roster-template.csv — sample CSV for roster import
+```
+
+---
+
+## License
+
+**CC BY-NC-SA 4.0** — free to share and adapt for non-commercial use with attribution.  
+See [LICENSE](LICENSE) for full terms.
+
 
 ---
 
