@@ -755,13 +755,24 @@ function wizardStep2(w) {
     <div class="form-hint">One name per line, or comma-separated</div>
   </div>`;
 
+  const currentCount = (w.players||[]).length;
+
   return `<h3 class="text-lg font-bold mb-4" style="color:var(--clr-primary)">Players</h3>
   <div class="player-list-input">
     <input class="form-input" id="playerInput" type="text" placeholder="Enter player name..." maxlength="60">
     <button class="btn btn-primary" data-action="add-player">Add</button>
   </div>
-  <div class="form-hint mb-2">Press Enter or click Add. ${pluralize((w.players||[]).length,'player')} added.</div>
+  <div class="form-hint mb-2">Press Enter or click Add. ${pluralize(currentCount,'player')} added.</div>
   <div class="player-chips" id="playerChips">${chips || '<span class="text-muted text-sm">No players added yet</span>'}</div>
+  <div class="mt-4">
+    <label class="form-label">Quick-add numbered players</label>
+    <div class="player-list-input">
+      <input class="form-input" id="quickAddCount" type="number" min="1" max="50"
+        placeholder="e.g. 12" style="max-width:110px">
+      <button class="btn btn-secondary" data-action="quick-add-players">Add Players</button>
+    </div>
+    <div class="form-hint">Adds &ldquo;Player ${currentCount+1}&rdquo;, &ldquo;Player ${currentCount+2}&rdquo;, etc.</div>
+  </div>
   ${rosterOptions}
   ${importBtn}`;
 }
@@ -1053,6 +1064,18 @@ function validateStep(step) {
     }
   }
   return true;
+}
+
+function doQuickAddPlayers() {
+  const inp = document.getElementById('quickAddCount');
+  const n = parseInt(inp?.value);
+  if (!n || n < 1) { showToast('Enter a number of players to add.', 'error'); return; }
+  if (!App.state.wData.players) App.state.wData.players = [];
+  const start = App.state.wData.players.length + 1;
+  for (let i = start; i < start + n; i++) {
+    App.state.wData.players.push(`Player ${i}`);
+  }
+  renderView();
 }
 
 function doAddPlayer() {
@@ -1769,6 +1792,7 @@ function handleClick(e) {
       App.state.wData.players.splice(pos, 1);
       renderView(); break;
     }
+    case 'quick-add-players': doQuickAddPlayers(); break;
     case 'add-roster-player':
       if (!App.state.wData.players) App.state.wData.players = [];
       if (!App.state.wData.athleteIds) App.state.wData.athleteIds = [];
