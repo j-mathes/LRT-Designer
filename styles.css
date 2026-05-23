@@ -61,6 +61,8 @@ body {
   color: var(--clr-text);
   background: var(--clr-bg);
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 img, svg { display: block; max-width: 100%; }
 button { cursor: pointer; font-family: inherit; }
@@ -163,7 +165,7 @@ h1,h2,h3,h4,h5,h6 { line-height: 1.25; font-weight: 600; }
 .mobile-nav-btn.active { color: var(--clr-accent); background: rgba(232,160,32,.15); }
 
 /* ── Main Content ── */
-.app-main { padding: 1.5rem 1rem; min-height: calc(100vh - var(--header-h)); }
+.app-main { padding: 1.5rem 1rem; flex: 1; }
 .container {
   max-width: var(--container-max);
   margin: 0 auto;
