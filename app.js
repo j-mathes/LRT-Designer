@@ -558,7 +558,7 @@ function viewDashboard() {
           </div>
           <div class="recent-card-name">${escHtml(t.name)}</div>
           <div class="recent-card-meta">
-            ${escHtml(t.sport||'') ? `<span>${escHtml(t.sport)}</span>  : ''}
+            ${escHtml(t.sport||'') ? `<span>${escHtml(t.sport)}</span>` : ''}
             <span>${pluralize(t.players?.length||0,'player')}</span> 
             <span>${escHtml(t.format)}</span>
           </div>
@@ -952,13 +952,13 @@ function wizardStep5(w) {
   return `<h3 class="text-lg font-bold mb-4" style="color:var(--clr-primary)">Review &amp; Create</h3>
   <div class="card mb-4"><div class="card-body">
     <div class="form-row mb-4">
-      <div><div class="form-label">Name</div><div class="font-bold">${escHtml(w.name||'
-      <div><div class="form-label">Sport</div><div>${escHtml(w.sport||'
-      <div><div class="form-label">Date</div><div>${escHtml(w.date||'
+      <div><div class="form-label">Name</div><div class="font-bold">${escHtml(w.name||'')}</div></div>
+      <div><div class="form-label">Sport</div><div>${escHtml(w.sport||'')}</div></div>
+      <div><div class="form-label">Date</div><div>${escHtml(w.date||'')}</div></div>
     </div>
     <div class="form-row mb-4">
-      <div><div class="form-label">Format</div><div>${escHtml(w.format||'
-      <div><div class="form-label">Method</div><div>${escHtml(w.method||'
+      <div><div class="form-label">Format</div><div>${escHtml(w.format||'')}</div></div>
+      <div><div class="form-label">Method</div><div>${escHtml(w.method||'')}</div></div>
       <div><div class="form-label">Scoring</div><div>${scoring}</div></div>
     </div>
     <div><div class="form-label">Schedule</div><div>${schedInfo}</div></div>
@@ -966,7 +966,7 @@ function wizardStep5(w) {
   <div class="card"><div class="card-header"><span class="card-title">${pluralize(count,'Player')}</span></div>
     <div class="card-body" style="max-height:260px;overflow-y:auto">${playerList}</div>
   </div>
-  <div class="alert alert-success mt-4"><span class="alert-icon">
+  <div class="alert alert-success mt-4"><span class="alert-icon">&#10003;</span>
     <span>Ready to create! Click <strong>Create Tournament</strong> to begin.</span>
   </div>`;
 }
