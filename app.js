@@ -1,5 +1,5 @@
-﻿/*
- * Linear Ranking Tournament Designer â€” app.js
+/*
+ * Linear Ranking Tournament Designer  app.js
  *
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
  * Copyright (c) 2026 Jared Mathes
@@ -9,22 +9,22 @@
  */
 'use strict';
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 // SCHEDULE DATA
 // R(label, ...slots)  S(court, t1_positions, t2_positions, out?)
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 const R = (l, ...s) => ({ label: l, slots: s });
 const S = (c, t1, t2, out = []) => ({ court: c, t1, t2, out });
 
 const SCHEDULES = {
   d4: {
-    id: 'd4', name: 'Doubles â€“ 4 Players', type: 'doubles', size: 4, courts: 1, gameCount: 3,
+    id: 'd4', name: 'Doubles -- 4 Players', type: 'doubles', size: 4, courts: 1, gameCount: 3,
     rounds: [
       R('A', S(1,[1,2],[3,4])), R('B', S(1,[1,3],[2,4])), R('C', S(1,[1,4],[2,3]))
     ]
   },
   d5: {
-    id: 'd5', name: 'Doubles â€“ 5 Players', type: 'doubles', size: 5, courts: 1, gameCount: 5,
+    id: 'd5', name: 'Doubles -- 5 Players', type: 'doubles', size: 5, courts: 1, gameCount: 5,
     rounds: [
       R('A', S(1,[1,2],[3,4],[5])), R('B', S(1,[1,3],[2,5],[4])),
       R('C', S(1,[1,5],[2,4],[3])), R('D', S(1,[1,4],[3,5],[2])),
@@ -32,7 +32,7 @@ const SCHEDULES = {
     ]
   },
   d8: {
-    id: 'd8', name: 'Doubles â€“ 8 Players', type: 'doubles', size: 8, courts: 2, gameCount: 7,
+    id: 'd8', name: 'Doubles -- 8 Players', type: 'doubles', size: 8, courts: 2, gameCount: 7,
     rounds: [
       R('A', S(1,[1,2],[3,4]),   S(2,[5,6],[7,8])),
       R('B', S(1,[1,5],[2,6]),   S(2,[3,7],[4,8])),
@@ -44,7 +44,7 @@ const SCHEDULES = {
     ]
   },
   d12_2: {
-    id: 'd12_2', name: 'Doubles â€“ 12 Players (2 Courts)', type: 'doubles', size: 12, courts: 2, gameCount: 17,
+    id: 'd12_2', name: 'Doubles -- 12 Players (2 Courts)', type: 'doubles', size: 12, courts: 2, gameCount: 17,
     rounds: [
       R('A',  S(1,[1,2],[6,7]),    S(2,[3,12],[4,10])),
       R('B',  S(1,[5,9],[8,11]),   S(2,[4,6],[2,7])),
@@ -66,7 +66,7 @@ const SCHEDULES = {
     ]
   },
   d12_3: {
-    id: 'd12_3', name: 'Doubles â€“ 12 Players (3 Courts)', type: 'doubles', size: 12, courts: 3, gameCount: 11,
+    id: 'd12_3', name: 'Doubles -- 12 Players (3 Courts)', type: 'doubles', size: 12, courts: 3, gameCount: 11,
     rounds: [
       R('A', S(1,[1,2],[6,7]),    S(2,[3,12],[4,10]),  S(3,[5,9],[8,11])),
       R('B', S(1,[1,3],[7,8]),    S(2,[2,4],[5,11]),   S(3,[6,10],[9,12])),
@@ -82,7 +82,7 @@ const SCHEDULES = {
     ]
   },
   d16: {
-    id: 'd16', name: 'Doubles â€“ 16 Players (4 Courts)', type: 'doubles', size: 16, courts: 4, gameCount: 15,
+    id: 'd16', name: 'Doubles -- 16 Players (4 Courts)', type: 'doubles', size: 16, courts: 4, gameCount: 15,
     rounds: [
       R('A', S(1,[1,2],[7,12]),  S(2,[3,4],[6,10]),   S(3,[5,13],[14,16]),  S(4,[8,9],[11,15])),
       R('B', S(1,[1,7],[2,12]),  S(2,[3,6],[4,10]),   S(3,[5,14],[13,16]),  S(4,[8,11],[9,15])),
@@ -102,7 +102,7 @@ const SCHEDULES = {
     ]
   },
   d25: {
-    id: 'd25', name: 'Doubles â€“ 25 Players (5 Courts)', type: 'doubles', size: 25, courts: 5, gameCount: 30,
+    id: 'd25', name: 'Doubles -- 25 Players (5 Courts)', type: 'doubles', size: 25, courts: 5, gameCount: 30,
     rounds: [
       R('A',  S(1,[1,2],[3,4]),     S(2,[6,7],[8,9]),     S(3,[11,12],[13,14]), S(4,[16,17],[18,19]), S(5,[21,22],[23,24])),
       R('B',  S(1,[1,3],[2,5]),     S(2,[6,8],[7,10]),    S(3,[11,13],[12,15]), S(4,[16,18],[17,20]), S(5,[21,23],[22,25])),
@@ -137,7 +137,7 @@ const SCHEDULES = {
     ]
   },
   t7: {
-    id: 't7', name: 'Triples â€“ 7 Players', type: 'triples', size: 7, courts: 1, gameCount: 7,
+    id: 't7', name: 'Triples -- 7 Players', type: 'triples', size: 7, courts: 1, gameCount: 7,
     rounds: [
       R('A', S(1,[1,2,3],[4,5,6],[7])), R('B', S(1,[1,4,7],[2,3,5],[6])),
       R('C', S(1,[2,6,7],[1,3,4],[5])), R('D', S(1,[2,4,5],[3,6,7],[1])),
@@ -146,7 +146,7 @@ const SCHEDULES = {
     ]
   },
   t9: {
-    id: 't9', name: 'Triples â€“ 9 Players', type: 'triples', size: 9, courts: 1, gameCount: 12,
+    id: 't9', name: 'Triples -- 9 Players', type: 'triples', size: 9, courts: 1, gameCount: 12,
     rounds: [
       R('A', S(1,[1,4,7],[2,5,9],[3,6,8])), R('B', S(1,[1,5,8],[2,6,7],[3,4,9])),
       R('C', S(1,[1,6,9],[2,4,8],[3,5,7])), R('D', S(1,[2,4,8],[3,5,7],[1,6,9])),
@@ -161,11 +161,11 @@ const SCHEDULES = {
 // Ordered list of all schedule IDs for suggestion logic
 const SCHEDULE_LIST = Object.values(SCHEDULES);
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// SUBSET FINDER â€” for sort-sift multi-group tournaments
+// 
+// SUBSET FINDER  for sort-sift multi-group tournaments
 // Returns arrays of group sizes (each group uses 1 court)
 // Valid single-court sizes: 4 (d4), 5 (d5), 7 (t7), 9 (t9)
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 function findSubsetOptions(n, courts, type) {
   const sizes = type === 'triples' ? [7, 9] : [4, 5];
   const results = [];
@@ -190,9 +190,9 @@ function findSubsetOptions(n, courts, type) {
   return results.slice(0, 8); // cap at 8 options
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 // STORAGE
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 const LS_KEY = 'lrt_v1';
 
 const IDB_CONFIG = { name: 'lrt_db', store: 'data', ver: 1 };
@@ -238,9 +238,9 @@ async function storeLoad() {
   try { return JSON.parse(raw); } catch (_) { return null; }
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 // APP DATA (persisted) & APP STATE (runtime)
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 const DEFAULT_SETTINGS = {
   defaultScoringType: 'points',
   defaultPointsTarget: 15,
@@ -278,9 +278,9 @@ let App = {
   render() { renderView(); }
 };
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 // UTILITIES
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 function uuid() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
     const r = Math.random() * 16 | 0;
@@ -305,9 +305,9 @@ function pluralize(n, word) { return `${n} ${word}${n === 1 ? '' : 's'}`; }
 function findTournament(id) { return App.data.tournaments.find(t => t.id === id); }
 function findAthlete(id)    { return App.data.athletes.find(a => a.id === id); }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 // TOURNAMENT LOGIC
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 
 /** Returns schedule options for given player count and format type */
 function suggestFormats(count, type) {
@@ -458,9 +458,9 @@ function getGroup(tournament, rid, gid) {
 }
 
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 // UI HELPERS
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 const viewRoot   = () => document.getElementById('viewRoot');
 const modalBack  = () => document.getElementById('modalBackdrop');
 const modalTitle = () => document.getElementById('modalTitle');
@@ -479,12 +479,12 @@ function hideModal() { modalBack().setAttribute('hidden', ''); }
 let _toastTimer = {};
 function showToast(msg, type = 'info', duration = 3000) {
   const id = uuid();
-  const icons = { success: 'âœ“', error: 'âœ—', warning: 'âš ', info: 'â„¹' };
+  const icons = { success: '&#10003;', error: '&#10007;', warning: '&#9888;', info: '&#8505;' };
   const el = document.createElement('div');
   el.className = `toast toast-${type}`; el.id = `t-${id}`;
-  el.innerHTML = `<span class="toast-icon">${icons[type]||'â„¹'}</span>
+  el.innerHTML = `<span class="toast-icon">${icons[type]||'&#8505;'}</span>
     <span class="toast-msg">${escHtml(msg)}</span>
-    <button class="toast-close" aria-label="Dismiss">Ã—</button>`;
+    <button class="toast-close" aria-label="Dismiss">
   document.getElementById('toastStack').appendChild(el);
   el.querySelector('.toast-close').addEventListener('click', () => removeToast(id));
   _toastTimer[id] = setTimeout(() => removeToast(id), duration);
@@ -514,9 +514,9 @@ function setNavActive(view) {
   });
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 // MAIN VIEW DISPATCHER
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 function renderView() {
   const v = App.state.view;
   setNavActive(v);
@@ -538,9 +538,9 @@ function afterRender(v) {
   if (v === 'wizard') initWizardUI();
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 // DASHBOARD VIEW
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 function viewDashboard() {
   const tournaments = App.data.tournaments;
   const athletes    = App.data.athletes;
@@ -558,8 +558,8 @@ function viewDashboard() {
           </div>
           <div class="recent-card-name">${escHtml(t.name)}</div>
           <div class="recent-card-meta">
-            ${escHtml(t.sport||'') ? `<span>${escHtml(t.sport)}</span> Â·` : ''}
-            <span>${pluralize(t.players?.length||0,'player')}</span> Â·
+            ${escHtml(t.sport||'') ? `<span>${escHtml(t.sport)}</span>  : ''}
+            <span>${pluralize(t.players?.length||0,'player')}</span> 
             <span>${escHtml(t.format)}</span>
           </div>
           ${t.status==='active'?`<div class="mt-2">
@@ -568,7 +568,7 @@ function viewDashboard() {
           </div>`:''}
         </div>`;
       }).join('')
-    : `<div class="empty-state"><div class="empty-state-icon">ðŸ†</div>
+    : `<div class="empty-state"><div class="empty-state-icon"></div>
         <h3>No tournaments yet</h3><p>Create your first tournament to get started.</p>
         <button class="btn btn-primary" data-action="new-tournament">New Tournament</button></div>`;
 
@@ -576,7 +576,7 @@ function viewDashboard() {
     <div><h1 class="page-title">Dashboard</h1>
       <p class="page-subtitle">Linear Ranking Tournament Designer</p></div>
     <div class="page-actions">
-      <button class="btn btn-primary" data-action="new-tournament">ï¼‹ New Tournament</button>
+      <button class="btn btn-primary" data-action="new-tournament">+ New Tournament</button>
     </div>
   </div>
   <div class="stat-grid">
@@ -605,9 +605,9 @@ function getTournamentProgress(t) {
   return { done, total, pct: total ? Math.round(done/total*100) : 0 };
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 // TOURNAMENT LIST VIEW
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 function viewTournamentList() {
   const q = (App.state.search || '').toLowerCase();
   const list = App.data.tournaments
@@ -625,7 +625,7 @@ function viewTournamentList() {
               ${t.sport ? `<span>${escHtml(t.sport)}</span>` : ''}
               <span>${formatDate(t.createdAt)}</span>
               <span>${pluralize(t.players?.length||0,'player')}</span>
-              <span>${escHtml(t.format)} Â· ${escHtml(t.method)}</span>
+              <span>${escHtml(t.format)}  ${escHtml(t.method)}</span>
               ${t.status==='active' ? `<span>${prog.pct}% done</span>` : ''}
             </div>
           </div>
@@ -635,29 +635,29 @@ function viewTournamentList() {
           </div>
         </div>`;
       }).join('')
-    : `<div class="empty-state"><div class="empty-state-icon">ðŸ“‹</div>
+    : `<div class="empty-state"><div class="empty-state-icon">
         <h3>No tournaments${q?' found':''}</h3>
         <p>${q?'Try a different search.':'Create your first tournament to get started.'}</p>
-        ${!q?`<button class="btn btn-primary" data-action="new-tournament">ï¼‹ New Tournament</button>`:''}
+        ${!q?`<button class="btn btn-primary" data-action="new-tournament">+ New Tournament</button>`:''}
        </div>`;
 
   return `<div class="page-header">
     <div><h1 class="page-title">Tournaments</h1>
       <p class="page-subtitle">${pluralize(App.data.tournaments.length,'tournament')} total</p></div>
     <div class="page-actions">
-      <button class="btn btn-primary" data-action="new-tournament">ï¼‹ New Tournament</button>
+      <button class="btn btn-primary" data-action="new-tournament">+ New Tournament</button>
     </div>
   </div>
   <div class="search-bar">
     <input class="form-input search-input" id="searchInput" type="search"
-      placeholder="Search tournamentsâ€¦" value="${escHtml(App.state.search||'')}" />
+      placeholder="Search tournaments..." value="${escHtml(App.state.search||'')}" />
   </div>
   <div class="tournament-list">${rows}</div>`;
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 // TOURNAMENT WIZARD VIEW
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 const WIZARD_STEPS = ['Info','Players','Format','Scoring','Review'];
 
 function viewWizard() {
@@ -667,7 +667,7 @@ function viewWizard() {
   const stepDots = WIZARD_STEPS.map((lbl, i) => {
     const s = i + 1;
     const state = s < step ? 'done' : s === step ? 'active' : '';
-    const circle = s < step ? 'âœ“' : s;
+    const circle = s < step ? '&#10003;' : s;
     return `${i > 0 ? `<div class="wizard-connector ${s<=step?'done':''}"></div>` : ''}
       <div class="wizard-step ${state}">
         <div class="wizard-step-circle">${circle}</div>
@@ -687,17 +687,17 @@ function viewWizard() {
 
   return `<div class="page-header">
     <div><h1 class="page-title">${w.editId ? 'Edit' : 'New'} Tournament</h1></div>
-    <button class="btn btn-ghost" data-action="cancel-wizard">âœ• Cancel</button>
+    <button class="btn btn-ghost" data-action="cancel-wizard">&#10005; Cancel</button>
   </div>
   <div class="wizard-steps">${stepDots}</div>
   <div class="wizard-body">
     <div class="card"><div class="card-body">
       ${body}
       <div class="wizard-nav">
-        ${!isFirst ? `<button class="btn btn-ghost" data-action="wizard-back">â† Back</button>` : '<span></span>'}
+        ${!isFirst ? `<button class="btn btn-ghost" data-action="wizard-back">&laquo; Back</button>` : '<span></span>'}
         ${!isLast
-          ? `<button class="btn btn-primary" data-action="wizard-next">Next â†’</button>`
-          : `<button class="btn btn-accent btn-lg" data-action="wizard-create">ðŸ† Create Tournament</button>`}
+          ? `<button class="btn btn-primary" data-action="wizard-next">Next &raquo;</button>`
+          : `<button class="btn btn-accent btn-lg" data-action="wizard-create">Create Tournament</button>`}
       </div>
     </div></div>
   </div>`;
@@ -724,7 +724,7 @@ function wizardStep1(w) {
   <div class="form-group">
     <label class="form-label" for="w-notes">Notes / Description</label>
     <textarea class="form-textarea" id="w-notes" rows="3"
-      placeholder="Optional notes about this tournamentâ€¦">${escHtml(w.notes||'')}</textarea>
+      placeholder="Optional notes about this tournament...">${escHtml(w.notes||'')}</textarea>
   </div>`;
 }
 
@@ -732,7 +732,7 @@ function wizardStep2(w) {
   const chips = (w.players||[]).map((p,i) =>
     `<div class="player-chip" data-pos="${i}">
        <span>${escHtml(p)}</span>
-       <button class="remove-chip" data-action="remove-player" data-pos="${i}" aria-label="Remove ${escHtml(p)}">Ã—</button>
+       <button class="remove-chip" data-action="remove-player" data-pos="${i}" aria-label="Remove ${escHtml(p)}">
      </div>`
   ).join('');
 
@@ -757,7 +757,7 @@ function wizardStep2(w) {
 
   return `<h3 class="text-lg font-bold mb-4" style="color:var(--clr-primary)">Players</h3>
   <div class="player-list-input">
-    <input class="form-input" id="playerInput" type="text" placeholder="Enter player nameâ€¦" maxlength="60">
+    <input class="form-input" id="playerInput" type="text" placeholder="Enter player name..." maxlength="60">
     <button class="btn btn-primary" data-action="add-player">Add</button>
   </div>
   <div class="form-hint mb-2">Press Enter or click Add. ${pluralize((w.players||[]).length,'player')} added.</div>
@@ -779,7 +779,7 @@ function wizardStep3(w) {
       <label class="radio-card ${method==='single'?'selected':''}">
         <input type="radio" name="w-method" value="single" ${method==='single'?'checked':''}>
         <div><div class="radio-card-title">Single Closed Cell</div>
-          <div class="radio-card-desc">All players in one group â€” most accurate linear ranking. Best for exact group sizes.</div>
+          <div class="radio-card-desc">All players in one group  most accurate linear ranking. Best for exact group sizes.</div>
         </div>
       </label>
       <label class="radio-card ${method==='sortSift'?'selected':''}">
@@ -826,7 +826,7 @@ function wizardStep3(w) {
   const schedHtml = buildScheduleSuggestions(count, fmt, method, courts, w.scheduleId, w.subsetConfig);
 
   return `<h3 class="text-lg font-bold mb-4" style="color:var(--clr-primary)">Tournament Format</h3>
-  <div class="alert alert-info"><span class="alert-icon">â„¹</span>
+  <div class="alert alert-info"><span class="alert-icon">&#8505;</span>
     <span>${pluralize(count,'player')} entered. Choose format and courts.</span>
   </div>
   ${methodHtml}${fmtHtml}${courtsHtml}
@@ -837,7 +837,7 @@ function buildScheduleSuggestions(count, fmt, method, courts, selectedId, select
   if (method === 'single') {
     const matches = suggestFormats(count, fmt);
     if (!matches.length) {
-      return `<div class="alert alert-warning"><span class="alert-icon">âš </span>
+      return `<div class="alert alert-warning"><span class="alert-icon">&#9888;</span>
         <span>No exact single-cell schedule for ${count} ${fmt} players. Use Sort &amp; Sift method or adjust player count.</span>
       </div>`;
     }
@@ -847,7 +847,7 @@ function buildScheduleSuggestions(count, fmt, method, courts, selectedId, select
           <span class="format-card-title">${escHtml(s.name)}</span>
           <span class="badge badge-primary">${s.courts} court${s.courts>1?'s':''}</span>
         </div>
-        <div class="format-card-body">${s.gameCount} rounds Â· ${s.size} players</div>
+        <div class="format-card-body">${s.gameCount} rounds  ${s.size} players</div>
         <div class="format-card-detail">Each player plays with every other once as partner, against every other twice as opponent.</div>
       </div>`).join('');
     return `<div class="form-group"><label class="form-label">Schedule</label>
@@ -857,7 +857,7 @@ function buildScheduleSuggestions(count, fmt, method, courts, selectedId, select
   // Sort-sift: show subset options
   const opts = findSubsetOptions(count, courts, fmt);
   if (!opts.length) {
-    return `<div class="alert alert-warning"><span class="alert-icon">âš </span>
+    return `<div class="alert alert-warning"><span class="alert-icon">&#9888;</span>
       <span>Cannot split ${count} ${fmt} players across ${courts} court${courts>1?'s':''} evenly with valid group sizes (4,5 for doubles; 7,9 for triples). Adjust player count or courts.</span>
     </div>`;
   }
@@ -890,7 +890,7 @@ function wizardStep4(w) {
     <div class="radio-group">
       <label class="radio-card ${type==='points'?'selected':''}">
         <input type="radio" name="w-scoring" value="points" ${type==='points'?'checked':''}>
-        <div><div class="radio-card-title">Points â€” First to X</div>
+        <div><div class="radio-card-title">Points  First to X</div>
           <div class="radio-card-desc">Play until one team reaches the target score.</div>
         </div>
       </label>
@@ -936,7 +936,7 @@ function wizardStep5(w) {
   const count  = (w.players||[]).length;
   const sched  = w.scheduleId ? SCHEDULES[w.scheduleId] : null;
   const scoring = w.scoringType === 'timed'
-    ? `Timed â€” ${w.timeLimitMinutes||7} min`
+    ? `Timed  ${w.timeLimitMinutes||7} min`
     : `First to ${w.pointsTarget||15}${w.winBy2?' (win by 2)':''}`;
 
   const playerList = (w.players||[]).map((p,i) =>
@@ -944,7 +944,7 @@ function wizardStep5(w) {
   ).join('');
 
   const schedInfo = sched
-    ? `<strong>${escHtml(sched.name)}</strong> â€” ${sched.gameCount} rounds, ${sched.courts} court${sched.courts>1?'s':''}`
+    ? `<strong>${escHtml(sched.name)}</strong>  ${sched.gameCount} rounds, ${sched.courts} court${sched.courts>1?'s':''}`
     : w.method === 'sortSift' && w.subsetConfig
       ? `Sort &amp; Sift: groups of ${escHtml(w.subsetConfig.join(' + '))}`
       : '<em>No schedule selected</em>';
@@ -952,13 +952,13 @@ function wizardStep5(w) {
   return `<h3 class="text-lg font-bold mb-4" style="color:var(--clr-primary)">Review &amp; Create</h3>
   <div class="card mb-4"><div class="card-body">
     <div class="form-row mb-4">
-      <div><div class="form-label">Name</div><div class="font-bold">${escHtml(w.name||'â€”')}</div></div>
-      <div><div class="form-label">Sport</div><div>${escHtml(w.sport||'â€”')}</div></div>
-      <div><div class="form-label">Date</div><div>${escHtml(w.date||'â€”')}</div></div>
+      <div><div class="form-label">Name</div><div class="font-bold">${escHtml(w.name||'
+      <div><div class="form-label">Sport</div><div>${escHtml(w.sport||'
+      <div><div class="form-label">Date</div><div>${escHtml(w.date||'
     </div>
     <div class="form-row mb-4">
-      <div><div class="form-label">Format</div><div>${escHtml(w.format||'â€”')}</div></div>
-      <div><div class="form-label">Method</div><div>${escHtml(w.method||'â€”')}</div></div>
+      <div><div class="form-label">Format</div><div>${escHtml(w.format||'
+      <div><div class="form-label">Method</div><div>${escHtml(w.method||'
       <div><div class="form-label">Scoring</div><div>${scoring}</div></div>
     </div>
     <div><div class="form-label">Schedule</div><div>${schedInfo}</div></div>
@@ -966,7 +966,7 @@ function wizardStep5(w) {
   <div class="card"><div class="card-header"><span class="card-title">${pluralize(count,'Player')}</span></div>
     <div class="card-body" style="max-height:260px;overflow-y:auto">${playerList}</div>
   </div>
-  <div class="alert alert-success mt-4"><span class="alert-icon">âœ“</span>
+  <div class="alert alert-success mt-4"><span class="alert-icon">
     <span>Ready to create! Click <strong>Create Tournament</strong> to begin.</span>
   </div>`;
 }
@@ -1008,9 +1008,9 @@ function updateWizardScoring(type) {
             <span class="form-check-label">Win by 2</span></label></div></div>`;
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 // WIZARD DATA COLLECTION HELPERS
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 function collectStep1() {
   return {
     name:  document.getElementById('w-name')?.value?.trim() || '',
@@ -1082,9 +1082,9 @@ function importPlayerCSV(input) {
 }
 
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 // TOURNAMENT DETAIL VIEW
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 function viewTournamentDetail() {
   const t = findTournament(App.state.tid);
   if (!t) return `<div class="alert alert-danger">Tournament not found. <button class="btn btn-sm btn-ghost" data-action="go-tournaments">Back</button></div>`;
@@ -1105,22 +1105,22 @@ function viewTournamentDetail() {
   else                          body = tabExport(t);
 
   const completeBtn = t.status === 'active'
-    ? `<button class="btn btn-success" data-action="complete-tournament" data-id="${t.id}">âœ“ Mark Complete</button>`
+    ? `<button class="btn btn-success" data-action="complete-tournament" data-id="${t.id}"> Mark Complete</button>`
     : t.status === 'completed'
       ? `<span class="badge badge-success">Completed ${formatDate(t.completedAt)}</span>`
-      : `<button class="btn btn-primary" data-action="start-tournament" data-id="${t.id}">â–¶ Start Tournament</button>`;
+      : `<button class="btn btn-primary" data-action="start-tournament" data-id="${t.id}"> Start Tournament</button>`;
 
   return `<div class="page-header">
     <div>
-      <button class="btn btn-ghost btn-sm mb-2" data-action="go-tournaments">â† Tournaments</button>
+      <button class="btn btn-ghost btn-sm mb-2" data-action="go-tournaments">&laquo; Tournaments</button>
       <h1 class="page-title">${escHtml(t.name)}</h1>
       <p class="page-subtitle">
-        ${t.sport?escHtml(t.sport)+' Â· ':''}${escHtml(t.format)} Â· ${escHtml(t.method==='sortSift'?'Sort & Sift':'Single Cell')} Â·
+        ${t.sport?escHtml(t.sport)+'  ':''}${escHtml(t.format)}  ${escHtml(t.method==='sortSift'?'Sort & Sift':'Single Cell')} 
         ${escHtml(t.scoringType==='timed'?`${t.timeLimitMinutes} min games`:`First to ${t.pointsTarget}${t.winBy2?' (win by 2)':''}`)}</p>
     </div>
     <div class="page-actions">
-      <button class="btn btn-ghost" data-action="print-schedule" data-id="${t.id}">ðŸ–¨ Schedule</button>
-      <button class="btn btn-ghost" data-action="print-scoresheet" data-id="${t.id}">ðŸ–¨ Scoresheet</button>
+      <button class="btn btn-ghost" data-action="print-schedule" data-id="${t.id}"> Schedule</button>
+      <button class="btn btn-ghost" data-action="print-scoresheet" data-id="${t.id}"> Scoresheet</button>
       ${completeBtn}
     </div>
   </div>
@@ -1134,13 +1134,13 @@ function viewTournamentDetail() {
   ${body}`;
 }
 
-// â”€â”€ Schedule Tab â”€â”€
+//  Schedule Tab 
 function tabSchedule(t) {
   const html = t.rounds.map((round, ri) =>
     round.groups.map((group, gi) => {
       const sched = SCHEDULES[group.scheduleId];
       const showGroupLabel = t.rounds.length > 1 || round.groups.length > 1;
-      const header = showGroupLabel ? `<h3 class="text-lg font-bold mt-4 mb-2" style="color:var(--clr-primary)">${escHtml(round.label)} â€” Group ${escHtml(group.label)}</h3>` : '';
+      const header = showGroupLabel ? `<h3 class="text-lg font-bold mt-4 mb-2" style="color:var(--clr-primary)">${escHtml(round.label)}  Group ${escHtml(group.label)}</h3>` : '';
       const rows = buildScheduleRows(group, sched);
       return header + `<div class="table-wrapper mb-4">
         <table class="data-table schedule-table">
@@ -1180,7 +1180,7 @@ function playerName(group, pos) {
   return p ? `#${pos} ${p.name}` : `#${pos}`;
 }
 
-// â”€â”€ Scores Tab â”€â”€
+//  Scores Tab 
 function tabScores(t) {
   const rid = App.state.rid || 0;
   const gid = App.state.gid || 0;
@@ -1207,7 +1207,7 @@ function tabScores(t) {
       const s2 = g.score2 ?? '';
       return `<div class="score-card ${g.completed?'completed':''}" data-game-id="${g.id}">
         <div class="score-card-header">
-          <span class="score-card-label">Round ${escHtml(label)} Â· Court ${g.courtNum}</span>
+          <span class="score-card-label">Round ${escHtml(label)}  Court ${g.courtNum}</span>
           ${g.completed?'<span class="badge badge-success">Done</span>':''}
         </div>
         <div class="score-teams">
@@ -1219,14 +1219,14 @@ function tabScores(t) {
           <input class="score-field" type="number" min="0" max="999"
             data-game="${g.id}" data-side="1" value="${escHtml(String(s1))}"
             placeholder="0" aria-label="Score team 1">
-          <span class="score-dash">â€”</span>
+          <span class="score-dash">-</span>
           <input class="score-field" type="number" min="0" max="999"
             data-game="${g.id}" data-side="2" value="${escHtml(String(s2))}"
             placeholder="0" aria-label="Score team 2">
         </div>
         ${outNames?`<div class="score-out">Out: ${outNames}</div>`:''}
         <button class="btn btn-sm btn-primary save-score-btn" data-action="save-score" data-game="${g.id}">
-          ${g.completed?'âœ“ Update':'Save Score'}
+          ${g.completed?' Update':'Save Score'}
         </button>
       </div>`;
     }).join('')
@@ -1240,7 +1240,7 @@ function tabScores(t) {
   <div class="score-entry-grid">${cards}</div>`;
 }
 
-// â”€â”€ Standings Tab â”€â”€
+//  Standings Tab 
 function tabStandings(t) {
   const rid = App.state.rid || 0;
   const gid = App.state.gid || 0;
@@ -1253,11 +1253,11 @@ function tabStandings(t) {
   const tables = allGroups.map(({ g, ri, gi, roundLabel }) => {
     const standings = computeGroupStandings(g);
     const showLabel = allGroups.length > 1;
-    const header = showLabel ? `<h3 class="text-lg font-bold mb-2" style="color:var(--clr-primary)">${escHtml(roundLabel)} â€” Group ${escHtml(g.label)}</h3>` : '';
+    const header = showLabel ? `<h3 class="text-lg font-bold mb-2" style="color:var(--clr-primary)">${escHtml(roundLabel)}  Group ${escHtml(g.label)}</h3>` : '';
     const rows = standings.map(s => {
       const rankClass = s.rank <= 3 ? `rank-${s.rank}` : '';
       return `<tr>
-        <td class="rank-cell ${rankClass}">${s.rank === 1 ? 'ðŸ¥‡' : s.rank === 2 ? 'ðŸ¥ˆ' : s.rank === 3 ? 'ðŸ¥‰' : s.rank}</td>
+        <td class="rank-cell ${rankClass}">${s.rank === 1 ? '#1' : s.rank === 2 ? '#2' : s.rank === 3 ? '#3' : s.rank}</td>
         <td class="name-cell">${escHtml(s.name)}</td>
         <td class="score-cell">${s.wins}</td>
         <td class="score-cell">${s.losses}</td>
@@ -1276,7 +1276,7 @@ function tabStandings(t) {
 
   // Sort-sift: show advancement guide
   const sortSiftNote = t.method === 'sortSift' && t.rounds.length > 0
-    ? `<div class="alert alert-info mt-4"><span class="alert-icon">â„¹</span>
+    ? `<div class="alert alert-info mt-4"><span class="alert-icon">&#8505;</span>
         <span><strong>Sort &amp; Sift:</strong> After all groups complete, top-ranked players advance to the next round's top group.
         <button class="btn btn-sm btn-primary" data-action="add-round" data-id="${t.id}" style="margin-left:.5rem">+ Add Next Round</button></span>
        </div>` : '';
@@ -1284,7 +1284,7 @@ function tabStandings(t) {
   return `<div>${tables}${sortSiftNote}</div>`;
 }
 
-// â”€â”€ Export Tab â”€â”€
+//  Export Tab 
 function tabExport(t) {
   return `<div class="settings-section">
     <h3>Export Tournament Data</h3>
@@ -1316,16 +1316,16 @@ function buildRoundGroupTabs(t, activeRid, activeGid) {
     r.groups.map((g, gi) =>
       `<button class="tab-btn ${ri===activeRid&&gi===activeGid?'active':''}"
          data-action="set-group-tab" data-rid="${ri}" data-gid="${gi}">
-         ${t.rounds.length>1?escHtml(r.label)+' â€” ':''}Group ${escHtml(g.label)}
+         ${t.rounds.length>1?escHtml(r.label)+'  ':''}Group ${escHtml(g.label)}
        </button>`
     )
   ).join('');
   return `<div class="tab-bar" style="margin-bottom:1rem">${tabs}</div>`;
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 // ROSTER VIEW
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 function viewRoster() {
   const q = (App.state.search || '').toLowerCase();
   const athletes = App.data.athletes
@@ -1346,32 +1346,32 @@ function viewRoster() {
     <div><h1 class="page-title">Athlete Roster</h1>
       <p class="page-subtitle">${pluralize(App.data.athletes.length,'athlete')} total</p></div>
     <div class="page-actions">
-      <button class="btn btn-ghost" data-action="import-roster">â¬† Import CSV</button>
-      <button class="btn btn-ghost" data-action="export-roster">â¬‡ Export CSV</button>
-      <button class="btn btn-primary" data-action="add-athlete">ï¼‹ Add Athlete</button>
+      <button class="btn btn-ghost" data-action="import-roster">Import CSV</button>
+      <button class="btn btn-ghost" data-action="export-roster"> Export CSV</button>
+      <button class="btn btn-primary" data-action="add-athlete">+ Add Athlete</button>
     </div>
   </div>
   <div class="search-bar">
     <input class="form-input search-input" id="searchInput" type="search"
-      placeholder="Search athletesâ€¦" value="${escHtml(App.state.search||'')}">
+      placeholder="Search athletes..." value="${escHtml(App.state.search||'')}">
   </div>
   <div class="card">
     <div class="table-wrapper">
       <table class="data-table roster-table">
         <thead><tr><th>Name</th><th>Notes</th><th>Added</th><th></th></tr></thead>
         <tbody>${rows || `<tr><td colspan="4"><div class="empty-state" style="padding:2rem">
-          <div class="empty-state-icon">ðŸ‘¤</div><h3>No athletes${q?' found':''}</h3>
+          <div class="empty-state-icon"></div><h3>No athletes${q?' found':''}</h3>
           <p>${q?'Try a different search.':'Add athletes to build your roster.'}</p>
-          ${!q?`<button class="btn btn-primary" data-action="add-athlete">ï¼‹ Add Athlete</button>`:''}
+          ${!q?`<button class="btn btn-primary" data-action="add-athlete">+ Add Athlete</button>`:''}
         </div></td></tr>`}</tbody>
       </table>
     </div>
   </div>`;
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 // SETTINGS VIEW
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 function viewSettings() {
   const s = App.data.settings;
   return `<div class="page-header">
@@ -1418,18 +1418,18 @@ function viewSettings() {
       <div class="card"><div class="card-body">
         <div class="font-bold mb-2">Backup All Data</div>
         <p class="text-sm text-muted mb-4">Export all tournaments and roster as a single JSON backup.</p>
-        <button class="btn btn-primary btn-full" data-action="export-all-json">â¬‡ Export Backup</button>
+        <button class="btn btn-primary btn-full" data-action="export-all-json"> Export Backup</button>
       </div></div>
       <div class="card"><div class="card-body">
         <div class="font-bold mb-2">Restore from Backup</div>
         <p class="text-sm text-muted mb-4">Import a full backup JSON file. <strong>Replaces all current data.</strong></p>
         <input type="file" id="restoreFile" accept=".json" class="form-input mb-2" style="padding:.3rem">
-        <button class="btn btn-secondary btn-full" data-action="import-all-json">â¬† Restore Backup</button>
+        <button class="btn btn-secondary btn-full" data-action="import-all-json">Restore Backup</button>
       </div></div>
       <div class="card"><div class="card-body">
         <div class="font-bold mb-2">Clear All Data</div>
         <p class="text-sm text-muted mb-4">Permanently delete all tournaments and roster data. Cannot be undone.</p>
-        <button class="btn btn-danger btn-full" data-action="clear-all-data">ðŸ—‘ Clear All Data</button>
+        <button class="btn btn-danger btn-full" data-action="clear-all-data"> Clear All Data</button>
       </div></div>
     </div>
   </div>
@@ -1438,15 +1438,15 @@ function viewSettings() {
     <div class="card"><div class="card-body">
       <p class="text-sm"><strong>Linear Ranking Tournament Designer</strong> v1.0.0</p>
       <p class="text-sm text-muted mt-1">Based on the Bjerring Linear Ranking Tournament system, as described in <em>Linear Ranking Tournaments</em> by Michael P. Fleming.</p>
-      <p class="text-sm text-muted mt-1">Â© 2026 Jared Mathes â€” <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></p>
+      <p class="text-sm text-muted mt-1"> 2026 Jared Mathes  <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></p>
     </div></div>
   </div>`;
 }
 
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 // PRINT MODULE
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 function printSchedule(tid) {
   const t = findTournament(tid);
   if (!t) return;
@@ -1454,7 +1454,7 @@ function printSchedule(tid) {
     r.groups.map((group, gi) => {
       const sched = SCHEDULES[group.scheduleId];
       const showLabel = t.rounds.length > 1 || r.groups.length > 1;
-      const groupTitle = showLabel ? ` â€” ${r.label} Group ${group.label}` : '';
+      const groupTitle = showLabel ? `  ${r.label} Group ${group.label}` : '';
       const rows = sched ? sched.rounds.map(round =>
         round.slots.map(slot => {
           const t1Names = slot.t1.map(p => printPlayerName(group, p)).join(' & ');
@@ -1471,10 +1471,10 @@ function printSchedule(tid) {
       ).join('') : '';
 
       return `<div class="print-page">
-        <div class="print-title">LINEAR RANKING TOURNAMENT â€” SCHEDULE${groupTitle}</div>
-        <div class="print-subtitle">${t.name} Â· ${t.sport||''} Â· ${formatDate(new Date(t.date).getTime())}</div>
+        <div class="print-title">LINEAR RANKING TOURNAMENT  SCHEDULE${groupTitle}</div>
+        <div class="print-subtitle">${t.name}  ${t.sport||''}  ${formatDate(new Date(t.date).getTime())}</div>
         <div class="print-subtitle">
-          ${t.scoringType==='timed'?`Timed â€” ${t.timeLimitMinutes} min`:
+          ${t.scoringType==='timed'?`Timed  ${t.timeLimitMinutes} min`:
             `First to ${t.pointsTarget}${t.winBy2?' (win by 2)':''}`} |
           Format: ${t.format}
         </div>
@@ -1485,7 +1485,7 @@ function printSchedule(tid) {
         </table>
         <br>
         <div style="font-size:8pt;color:#555">
-          Players: ${group.players.map(p => `#${p.pos} ${p.name}`).join(' Â· ')}
+          Players: ${group.players.map(p => `#${p.pos} ${p.name}`).join('  ')}
         </div>
       </div>`;
     }).join('')
@@ -1501,7 +1501,7 @@ function printScoresheet(tid) {
     r.groups.map((group, gi) => {
       const sched = SCHEDULES[group.scheduleId];
       const showLabel = t.rounds.length > 1 || r.groups.length > 1;
-      const groupTitle = showLabel ? ` â€” ${r.label} Group ${group.label}` : '';
+      const groupTitle = showLabel ? `  ${r.label} Group ${group.label}` : '';
       const gameLabels = sched ? sched.rounds.map(r => r.label) : [];
       const schedSummary = sched ? sched.rounds.map(r =>
         r.slots.map(s => `${r.label}: ${s.t1.join(',')} v ${s.t2.join(',')}`).join(' | ')
@@ -1533,8 +1533,8 @@ function printScoresheet(tid) {
       }).join('');
 
       return `<div class="print-page">
-        <div class="print-title">LINEAR RANKING TOURNAMENT â€” SCORESHEET${groupTitle}</div>
-        <div class="print-subtitle">${t.name} Â· ${t.sport||''} Â· ${formatDate(new Date(t.date).getTime())}</div>
+        <div class="print-title">LINEAR RANKING TOURNAMENT  SCORESHEET${groupTitle}</div>
+        <div class="print-subtitle">${t.name}  ${t.sport||''}  ${formatDate(new Date(t.date).getTime())}</div>
         <div class="print-subtitle" style="font-size:7pt">${schedSummary}</div>
         <br>
         <table class="print-table">
@@ -1556,15 +1556,15 @@ function printRuleSheet(tid) {
   const t = tid ? findTournament(tid) : null;
   const sport = t?.sport || 'Volleyball';
   const scoring = t ? (t.scoringType==='timed'
-    ? `Timed games â€” ${t.timeLimitMinutes} minutes per game`
+    ? `Timed games  ${t.timeLimitMinutes} minutes per game`
     : `First to ${t.pointsTarget} points${t.winBy2?' (win by 2)':''}`)
     : 'As specified per tournament';
 
   const html = `<div class="print-page print-rules">
-    <div class="print-title">LINEAR RANKING TOURNAMENT â€” RULES</div>
-    <div class="print-subtitle">${t ? escHtml(t.name) + ' Â· ' : ''}${sport}</div>
+    <div class="print-title">LINEAR RANKING TOURNAMENT  RULES</div>
+    <div class="print-subtitle">${t ? escHtml(t.name) + '  ' : ''}${sport}</div>
     <h3>How It Works</h3>
-    <p>The Linear Ranking Tournament (Bjerring system) ranks all players from best to poorest based entirely on competition results â€” not opinion. Each player plays <em>with</em> every other player once as a partner and <em>against</em> every other player twice as an opponent (doubles format).</p>
+    <p>The Linear Ranking Tournament (Bjerring system) ranks all players from best to poorest based entirely on competition results  not opinion. Each player plays <em>with</em> every other player once as a partner and <em>against</em> every other player twice as an opponent (doubles format).</p>
     <h3>Scoring</h3>
     <ul>
       <li>Each player tracks: Games Won, Games Lost, and Points Differential (+/-)</li>
@@ -1577,20 +1577,20 @@ function printRuleSheet(tid) {
       <li>Servers and serve receivers must rotate between games</li>
       <li>Either player may attack; all standard skills apply</li>
       <li>You may win by 1 point unless "Win by 2" is specified</li>
-      <li>Play begins when the schedule signals â€” manage your own time</li>
+      <li>Play begins when the schedule signals  manage your own time</li>
       <li>An absent player automatically drops one group in Sort &amp; Sift rounds</li>
     </ul>
     <h3>Scoresheet Instructions</h3>
     <ol>
       <li>Find your player number on the scoresheet</li>
-      <li>For each round (A, B, Câ€¦) record your score as <strong>+</strong> (points scored minus points against) or <strong>âˆ’</strong> (if you lost)</li>
+      <li>For each round (A, B, C...) record your score as <strong>+</strong> (points scored minus points against) or <strong> (if you lost)</li>
       <li>At the end, total your Wins, Losses, and the sum of all differentials</li>
       <li>Hand the sheet to the organizer for final ranking</li>
     </ol>
     <h3>Court Dimensions (Volleyball)</h3>
-    <p>Recommended: 4.5 m wide Ã— 18 m long (narrow court). Antennae optional.</p>
+    <p>Recommended: 4.5 m wide  18 m long (narrow court). Antennae optional.</p>
     <p style="margin-top:16pt;font-size:8pt;color:#777">
-      LRT Designer Â· Â© 2026 Jared Mathes Â· CC BY-NC-SA 4.0 Â·
+      LRT Designer   2026 Jared Mathes  CC BY-NC-SA 4.0 
       Based on the Bjerring Linear Ranking Tournament system
     </p>
   </div>`;
@@ -1613,9 +1613,9 @@ function doPrint(content) {
   window.print();
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 // IMPORT / EXPORT
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 function downloadFile(content, filename, mimeType) {
   const blob = new Blob([content], { type: mimeType });
   const url  = URL.createObjectURL(blob);
@@ -1737,9 +1737,9 @@ function sanitizeFilename(s) {
   return s.replace(/[^a-z0-9_\-]/gi, '_').toLowerCase().slice(0, 50);
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 // EVENT HANDLERS (delegation)
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 function handleClick(e) {
   const btn = e.target.closest('[data-action]');
   if (!btn) return;
@@ -1871,9 +1871,9 @@ function handleInput(e) {
   }
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 // ACTION HANDLERS
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 function doWizardNext() {
   const step = App.state.wStep;
   if (!validateStep(step)) return;
@@ -2042,9 +2042,9 @@ function doSaveSettings() {
   showToast('Settings saved.', 'success');
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 // INIT
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// 
 async function init() {
   await App.load();
 
