@@ -1148,8 +1148,8 @@ function viewTournamentDetail() {
         ${escHtml(t.scoringType==='timed'?`${t.timeLimitMinutes} min games`:`First to ${t.pointsTarget}${t.winBy2?' (win by 2)':''}`)}</p>
     </div>
     <div class="page-actions">
-      <button class="btn btn-ghost" data-action="print-schedule" data-id="${t.id}"> Schedule</button>
-      <button class="btn btn-ghost" data-action="print-scoresheet" data-id="${t.id}"> Scoresheet</button>
+      <button class="btn btn-ghost" data-action="print-schedule" data-id="${t.id}"> Print Schedule</button>
+      <button class="btn btn-ghost" data-action="print-scoresheet" data-id="${t.id}"> Print Scoresheet</button>
       ${completeBtn}
     </div>
   </div>

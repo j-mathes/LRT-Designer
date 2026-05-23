@@ -724,7 +724,7 @@ h1,h2,h3,h4,h5,h6 { line-height: 1.25; font-weight: 600; }
   .no-print, .app-header, .app-main .page-actions, .tab-bar,
   .modal-backdrop, .toast-stack { display: none !important; }
 
-  body { background: #fff; color: #000; font-size: 10pt; }
+  body { background: #fff; color: #000; font-size: 10pt; min-height: 0 !important; display: block !important; }
 
   .print-only { display: block !important; }
   #viewRoot    { display: none !important; }
