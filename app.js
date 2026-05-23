@@ -1245,7 +1245,7 @@ function tabScores(t) {
   const roundLabels = [...new Set(group.games.map(g => g.gameLabel))];
 
   const courtHeaders = Array.from({length: maxCourt}, (_, i) =>
-    `<th style="min-width:180px">Court ${i + 1}</th>`).join('');
+    `<th>Court ${i + 1}</th>`).join('');
 
   const toggle = `<label class="player-num-toggle">
     <input type="checkbox" data-action="toggle-player-nums"${showNum ? ' checked' : ''}>
@@ -1567,9 +1567,29 @@ function printScoresheet(tid) {
       const showLabel = t.rounds.length > 1 || r.groups.length > 1;
       const groupTitle = showLabel ? `  ${r.label} Group ${group.label}` : '';
       const gameLabels = sched ? sched.rounds.map(r => r.label) : [];
-      const schedSummary = sched ? sched.rounds.map(r =>
-        r.slots.map(s => `${r.label}: ${s.t1.join(',')} v ${s.t2.join(',')}`).join(' | ')
-      ).join('  ') : '';
+
+      // Abbreviated schedule reference table
+      const schedMaxCourt = sched ? Math.max(...sched.rounds.flatMap(r => r.slots.map(s => s.court))) : 1;
+      const schedColHeaders = Array.from({length: schedMaxCourt}, (_, i) => `<th>Court ${i+1}</th>`).join('');
+      const schedTableRows = sched ? sched.rounds.map(round => {
+        const courtCells = Array.from({length: schedMaxCourt}, (_, ci) => {
+          const slot = round.slots.find(s => s.court === ci+1);
+          if (!slot) return '<td style="text-align:center">--</td>';
+          const t1 = slot.t1.map(p => printPlayerName(group, p)).join(' &amp; ');
+          const t2 = slot.t2.map(p => printPlayerName(group, p)).join(' &amp; ');
+          return `<td style="text-align:left">${t1} v ${t2}</td>`;
+        }).join('');
+        const out = [...new Set(round.slots.flatMap(s => s.out))].map(p => printPlayerName(group, p)).join(', ');
+        return `<tr><td style="font-weight:bold;text-align:center">${round.label}</td>${courtCells}<td>${out||'N/A'}</td></tr>`;
+      }).join('') : '';
+      const schedTable = sched ? `
+        <div style="margin-top:12pt">
+          <div style="font-weight:bold;font-size:9pt;border-bottom:1px solid #000;padding-bottom:2pt;margin-bottom:4pt">Schedule Reference</div>
+          <table class="print-table" style="font-size:8pt">
+            <thead><tr><th>Round</th>${schedColHeaders}<th>Out</th></tr></thead>
+            <tbody>${schedTableRows}</tbody>
+          </table>
+        </div>` : '';
 
       const headerCols = gameLabels.map(l => `<th class="game-col">${l}</th>`).join('');
       const rows = group.players.map(p => {
@@ -1597,9 +1617,8 @@ function printScoresheet(tid) {
       }).join('');
 
       return `<div class="print-page">
-        <div class="print-title">LINEAR RANKING TOURNAMENT  SCORESHEET${groupTitle}</div>
-        <div class="print-subtitle">${t.name}  ${t.sport||''}  ${formatDate(new Date(t.date).getTime())}</div>
-        <div class="print-subtitle" style="font-size:7pt">${schedSummary}</div>
+        <div class="print-title">LINEAR RANKING TOURNAMENT \u2014 SCORESHEET${groupTitle}</div>
+        <div class="print-subtitle">${t.name} \u2014 ${t.sport||''} \u2014 ${formatDate(new Date(t.date).getTime())}</div>
         <br>
         <table class="print-table">
           <thead><tr>
@@ -1609,6 +1628,7 @@ function printScoresheet(tid) {
           </tr></thead>
           <tbody>${rows}</tbody>
         </table>
+        ${schedTable}
       </div>`;
     }).join('')
   ).join('');
