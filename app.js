@@ -1228,6 +1228,7 @@ function tabScores(t) {
   const roundGroupTabs = buildRoundGroupTabs(t, rid, gid);
   const sched = SCHEDULES[group.scheduleId];
   const progress = groupProgress(group);
+  const maxScore = (t.scoringType === 'points' && !t.winBy2) ? t.pointsTarget : 999;
 
   // Determine courts from games
   const maxCourt = group.games.reduce((m, g) => Math.max(m, g.courtNum || 1), 1);
@@ -1255,10 +1256,10 @@ function tabScores(t) {
       return `<td class="score-table-cell ${doneClass}">
         <div class="score-table-teams"><div>${team1}</div><div class="vs-divider">vs</div><div>${team2}</div></div>
         <div class="score-table-inputs">
-          <input class="score-field" type="number" min="0" max="999"
+          <input class="score-field" type="number" min="0" max="${maxScore}"
             data-game="${g.id}" data-side="1" value="${escHtml(String(s1))}" placeholder="0">
           <span class="score-dash">-</span>
-          <input class="score-field" type="number" min="0" max="999"
+          <input class="score-field" type="number" min="0" max="${maxScore}"
             data-game="${g.id}" data-side="2" value="${escHtml(String(s2))}" placeholder="0">
           <button class="btn btn-sm ${g.completed ? 'btn-ghost' : 'btn-primary'} save-score-btn"
             data-action="save-score" data-game="${g.id}">${g.completed ? 'Update' : 'Save'}</button>
@@ -2034,6 +2035,11 @@ function saveScore(gameId) {
   const s1 = parseInt(document.querySelector(`input[data-game="${gameId}"][data-side="1"]`)?.value);
   const s2 = parseInt(document.querySelector(`input[data-game="${gameId}"][data-side="2"]`)?.value);
   if (isNaN(s1) || isNaN(s2)) { showToast('Enter valid scores.', 'error'); return; }
+  if (t.scoringType === 'points' && !t.winBy2) {
+    if (s1 > t.pointsTarget || s2 > t.pointsTarget) {
+      showToast(`Score cannot exceed ${t.pointsTarget} (points to win).`, 'error'); return;
+    }
+  }
   game.score1 = s1; game.score2 = s2; game.completed = true;
   if (t.status === 'setup') t.status = 'active';
   App.save(); renderView();
