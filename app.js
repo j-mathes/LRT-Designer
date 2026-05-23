@@ -635,7 +635,7 @@ function viewTournamentList() {
           </div>
         </div>`;
       }).join('')
-    : `<div class="empty-state"><div class="empty-state-icon">
+    : `<div class="empty-state">
         <h3>No tournaments${q?' found':''}</h3>
         <p>${q?'Try a different search.':'Create your first tournament to get started.'}</p>
         ${!q?`<button class="btn btn-primary" data-action="new-tournament">+ New Tournament</button>`:''}
