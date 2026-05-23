@@ -484,7 +484,7 @@ function showToast(msg, type = 'info', duration = 3000) {
   el.className = `toast toast-${type}`; el.id = `t-${id}`;
   el.innerHTML = `<span class="toast-icon">${icons[type]||'&#8505;'}</span>
     <span class="toast-msg">${escHtml(msg)}</span>
-    <button class="toast-close" aria-label="Dismiss">
+    <button class="toast-close" aria-label="Dismiss">&times;</button>`;
   document.getElementById('toastStack').appendChild(el);
   el.querySelector('.toast-close').addEventListener('click', () => removeToast(id));
   _toastTimer[id] = setTimeout(() => removeToast(id), duration);
