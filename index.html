@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="description" content="Linear Ranking Tournament Designer — organize and track Bjerring-style linear ranking tournaments for any sport." />
+  <title>Linear Ranking Tournament Designer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ===== TOP NAVIGATION ===== -->
+  <header class="app-header no-print" id="appHeader">
+    <div class="header-inner">
+      <div class="app-brand">
+        <svg class="brand-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <circle cx="20" cy="20" r="19" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 28 L20 10 L28 28 M15 22 H25" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="brand-text">
+          <span class="brand-name">LRT Designer</span>
+          <span class="brand-sub">Linear Ranking Tournament</span>
+        </div>
+      </div>
+
+      <nav class="main-nav" id="mainNav" role="navigation" aria-label="Main navigation">
+        <button class="nav-btn" data-nav="dashboard" aria-current="false">Dashboard</button>
+        <button class="nav-btn" data-nav="tournaments" aria-current="false">Tournaments</button>
+        <button class="nav-btn" data-nav="roster" aria-current="false">Roster</button>
+        <button class="nav-btn" data-nav="settings" aria-current="false">Settings</button>
+      </nav>
+
+      <button class="hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <nav class="mobile-nav" id="mobileNav" role="navigation" aria-label="Mobile navigation" hidden>
+      <button class="mobile-nav-btn" data-nav="dashboard">Dashboard</button>
+      <button class="mobile-nav-btn" data-nav="tournaments">Tournaments</button>
+      <button class="mobile-nav-btn" data-nav="roster">Roster</button>
+      <button class="mobile-nav-btn" data-nav="settings">Settings</button>
+    </nav>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="app-main" id="appMain">
+    <div class="container" id="viewRoot">
+      <!-- Content rendered by app.js -->
+      <div class="loading-screen">
+        <div class="loading-spinner"></div>
+        <p>Loading…</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== MODAL ===== -->
+  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+    <div class="modal-dialog" id="modalDialog">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">Dialog</h2>
+        <button class="btn-icon modal-close" id="modalClose" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="modal-content" id="modalContent"></div>
+      <div class="modal-actions" id="modalActions"></div>
+    </div>
+  </div>
+
+  <!-- ===== TOAST NOTIFICATIONS ===== -->
+  <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="false" role="status"></div>
+
+  <!-- ===== PRINT-ONLY AREA ===== -->
+  <div class="print-only" id="printRoot"></div>
+
+  <!-- SheetJS for Excel export/import (CDN) -->
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
