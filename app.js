@@ -1221,53 +1221,61 @@ function tabScores(t) {
   const sched = SCHEDULES[group.scheduleId];
   const progress = groupProgress(group);
 
-  // Group games by round label
-  const byRound = {};
-  group.games.forEach(g => {
-    if (!byRound[g.gameLabel]) byRound[g.gameLabel] = [];
-    byRound[g.gameLabel].push(g);
-  });
+  // Determine courts from games
+  const maxCourt = group.games.reduce((m, g) => Math.max(m, g.courtNum || 1), 1);
 
-  const cards = Object.entries(byRound).map(([label, games]) =>
-    games.map(g => {
+  // Gather unique round labels in order
+  const roundLabels = [...new Set(group.games.map(g => g.gameLabel))];
+
+  const courtHeaders = Array.from({length: maxCourt}, (_, i) =>
+    `<th style="min-width:220px">Court ${i + 1}</th>`).join('');
+
+  const rows = roundLabels.map(label => {
+    const courtCells = Array.from({length: maxCourt}, (_, i) => {
+      const g = group.games.find(gm => gm.gameLabel === label && gm.courtNum === i + 1);
+      if (!g) return '<td class="text-muted" style="text-align:center">--</td>';
       const team1 = g.t1.map(pos => escHtml(playerName(group, pos))).join(' & ');
       const team2 = g.t2.map(pos => escHtml(playerName(group, pos))).join(' & ');
-      const outNames = g.out.map(pos => escHtml(playerName(group, pos))).join(', ');
       const s1 = g.score1 ?? '';
       const s2 = g.score2 ?? '';
-      return `<div class="score-card ${g.completed?'completed':''}" data-game-id="${g.id}">
-        <div class="score-card-header">
-          <span class="score-card-label">Round ${escHtml(label)}  Court ${g.courtNum}</span>
-          ${g.completed?'<span class="badge badge-success">Done</span>':''}
-        </div>
-        <div class="score-teams">
-          <span class="score-team">${team1}</span>
-          <span class="score-vs">vs</span>
-          <span class="score-team">${team2}</span>
-        </div>
-        <div class="score-inputs">
+      const doneClass = g.completed ? 'score-row-done' : '';
+      return `<td class="score-table-cell ${doneClass}">
+        <div class="score-table-teams">${team1} <span class="score-vs">vs</span> ${team2}</div>
+        <div class="score-table-inputs">
           <input class="score-field" type="number" min="0" max="999"
-            data-game="${g.id}" data-side="1" value="${escHtml(String(s1))}"
-            placeholder="0" aria-label="Score team 1">
+            data-game="${g.id}" data-side="1" value="${escHtml(String(s1))}" placeholder="0">
           <span class="score-dash">-</span>
           <input class="score-field" type="number" min="0" max="999"
-            data-game="${g.id}" data-side="2" value="${escHtml(String(s2))}"
-            placeholder="0" aria-label="Score team 2">
+            data-game="${g.id}" data-side="2" value="${escHtml(String(s2))}" placeholder="0">
+          <button class="btn btn-sm ${g.completed ? 'btn-ghost' : 'btn-primary'} save-score-btn"
+            data-action="save-score" data-game="${g.id}">${g.completed ? 'Update' : 'Save'}</button>
         </div>
-        ${outNames?`<div class="score-out">Out: ${outNames}</div>`:''}
-        <button class="btn btn-sm btn-primary save-score-btn" data-action="save-score" data-game="${g.id}">
-          ${g.completed?' Update':'Save Score'}
-        </button>
-      </div>`;
-    }).join('')
-  ).join('');
+      </td>`;
+    }).join('');
+
+    const outPlayers = [...new Set(group.games
+      .filter(g => g.gameLabel === label)
+      .flatMap(g => g.out))]
+      .map(pos => escHtml(playerName(group, pos))).join(', ');
+
+    return `<tr>
+      <td><span class="badge badge-primary">${escHtml(label)}</span></td>
+      ${courtCells}
+      <td class="text-sm" style="white-space:nowrap">${outPlayers || '<span class="text-muted">None</span>'}</td>
+    </tr>`;
+  }).join('');
 
   return `${roundGroupTabs}
   <div class="flex items-center justify-between mb-4">
     <span class="text-muted text-sm">${progress.done}/${progress.total} games complete</span>
-    <button class="btn btn-sm btn-ghost" data-action="mark-all-remaining" data-rid="${rid}" data-gid="${gid}">Mark remaining complete</button>
+    <button class="btn btn-sm btn-ghost" data-action="mark-all-remaining" data-rid="${rid}" data-gid="${gid}">Mark all complete</button>
   </div>
-  <div class="score-entry-grid">${cards}</div>`;
+  <div class="table-wrapper">
+    <table class="data-table schedule-table">
+      <thead><tr><th>Round</th>${courtHeaders}<th>Out</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>`;
 }
 
 //  Standings Tab 
