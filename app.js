@@ -264,7 +264,8 @@ let App = {
     gid: 0,             // group index
     wStep: 1,           // wizard step
     wData: {},          // wizard working data
-    search: ''
+    search: '',
+    showPlayerNums: true
   },
   save() { storeSave(this.data); },
   async load() {
@@ -1164,19 +1165,24 @@ function viewTournamentDetail() {
 
 //  Schedule Tab 
 function tabSchedule(t) {
+  const showNum = App.state.showPlayerNums !== false;
+  const toggle = `<label class="player-num-toggle">
+    <input type="checkbox" data-action="toggle-player-nums"${showNum ? ' checked' : ''}>
+    Show player numbers
+  </label>`;
   const outNote = `<p class="text-sm text-muted mb-3"><strong>Out</strong> &mdash; the listed player(s) sit out that round and should officiate (referee/supply balls). Every player rotates through sitting out across the schedule.</p>`;
   const html = t.rounds.map((round, ri) =>
     round.groups.map((group, gi) => {
       const sched = SCHEDULES[group.scheduleId];
       const showGroupLabel = t.rounds.length > 1 || round.groups.length > 1;
       const header = showGroupLabel ? `<h3 class="text-lg font-bold mt-4 mb-2" style="color:var(--clr-primary)">${escHtml(round.label)} &mdash; Group ${escHtml(group.label)}</h3>` : '';
-      return header + `<div class="table-wrapper mb-4">${buildScheduleTable(group, sched)}</div>`;
+      return header + `<div class="table-wrapper mb-4">${buildScheduleTable(group, sched, showNum)}</div>`;
     }).join('')
   ).join('');
-  return outNote + (html || '<div class="empty-state"><p>No schedule generated.</p></div>');
+  return toggle + outNote + (html || '<div class="empty-state"><p>No schedule generated.</p></div>');
 }
 
-function buildScheduleTable(group, sched) {
+function buildScheduleTable(group, sched, showNum = true) {
   if (!sched) return '';
   const maxCourt = Math.max(...sched.rounds.flatMap(r => r.slots.map(s => s.court)));
   const courtHeaders = Array.from({length: maxCourt}, (_, i) =>
@@ -1186,16 +1192,16 @@ function buildScheduleTable(group, sched) {
     const courtCells = Array.from({length: maxCourt}, (_, i) => {
       const slot = r.slots.find(s => s.court === i + 1);
       if (!slot) return '<td class="text-muted" style="text-align:center">--</td>';
-      const t1 = slot.t1.map(pos => escHtml(playerName(group, pos))).join(' / ');
-      const t2 = slot.t2.map(pos => escHtml(playerName(group, pos))).join(' / ');
-      return `<td class="teams-cell">${t1} <span class="text-muted">vs</span> ${t2}</td>`;
+      const t1 = slot.t1.map(pos => escHtml(playerName(group, pos, showNum))).join('<br>');
+      const t2 = slot.t2.map(pos => escHtml(playerName(group, pos, showNum))).join('<br>');
+      return `<td class="teams-cell"><div>${t1}</div><div class="vs-divider">vs</div><div>${t2}</div></td>`;
     }).join('');
     const outPlayers = [...new Set(r.slots.flatMap(s => s.out))]
-      .map(pos => escHtml(playerName(group, pos))).join(', ');
+      .map(pos => escHtml(playerName(group, pos, showNum))).join(', ');
     return `<tr>
       <td><span class="badge badge-primary">${escHtml(r.label)}</span></td>
       ${courtCells}
-      <td>${outPlayers ? `<span class="out-badge">${outPlayers}</span>` : ''}</td>
+      <td>${outPlayers ? `<span class="out-badge">${outPlayers}</span>` : '<span class="text-muted">N/A</span>'}</td>
     </tr>`;
   }).join('');
 
@@ -1205,9 +1211,10 @@ function buildScheduleTable(group, sched) {
   </table>`;
 }
 
-function playerName(group, pos) {
+function playerName(group, pos, showNum = true) {
   const p = group.players.find(p => p.pos === pos);
-  return p ? `#${pos} ${p.name}` : `#${pos}`;
+  if (p) return showNum ? `#${pos} ${p.name}` : p.name;
+  return showNum ? `#${pos}` : '?';
 }
 
 //  Scores Tab 
@@ -1217,6 +1224,7 @@ function tabScores(t) {
   const group = getGroup(t, rid, gid);
   if (!group) return '<div class="alert alert-warning">No group found.</div>';
 
+  const showNum = App.state.showPlayerNums !== false;
   const roundGroupTabs = buildRoundGroupTabs(t, rid, gid);
   const sched = SCHEDULES[group.scheduleId];
   const progress = groupProgress(group);
@@ -1228,19 +1236,24 @@ function tabScores(t) {
   const roundLabels = [...new Set(group.games.map(g => g.gameLabel))];
 
   const courtHeaders = Array.from({length: maxCourt}, (_, i) =>
-    `<th style="min-width:220px">Court ${i + 1}</th>`).join('');
+    `<th style="min-width:180px">Court ${i + 1}</th>`).join('');
+
+  const toggle = `<label class="player-num-toggle">
+    <input type="checkbox" data-action="toggle-player-nums"${showNum ? ' checked' : ''}>
+    Show player numbers
+  </label>`;
 
   const rows = roundLabels.map(label => {
     const courtCells = Array.from({length: maxCourt}, (_, i) => {
       const g = group.games.find(gm => gm.gameLabel === label && gm.courtNum === i + 1);
       if (!g) return '<td class="text-muted" style="text-align:center">--</td>';
-      const team1 = g.t1.map(pos => escHtml(playerName(group, pos))).join(' & ');
-      const team2 = g.t2.map(pos => escHtml(playerName(group, pos))).join(' & ');
+      const team1 = g.t1.map(pos => escHtml(playerName(group, pos, showNum))).join('<br>');
+      const team2 = g.t2.map(pos => escHtml(playerName(group, pos, showNum))).join('<br>');
       const s1 = g.score1 ?? '';
       const s2 = g.score2 ?? '';
       const doneClass = g.completed ? 'score-row-done' : '';
       return `<td class="score-table-cell ${doneClass}">
-        <div class="score-table-teams">${team1} <span class="score-vs">vs</span> ${team2}</div>
+        <div class="score-table-teams"><div>${team1}</div><div class="vs-divider">vs</div><div>${team2}</div></div>
         <div class="score-table-inputs">
           <input class="score-field" type="number" min="0" max="999"
             data-game="${g.id}" data-side="1" value="${escHtml(String(s1))}" placeholder="0">
@@ -1256,19 +1269,22 @@ function tabScores(t) {
     const outPlayers = [...new Set(group.games
       .filter(g => g.gameLabel === label)
       .flatMap(g => g.out))]
-      .map(pos => escHtml(playerName(group, pos))).join(', ');
+      .map(pos => escHtml(playerName(group, pos, showNum))).join(', ');
 
     return `<tr>
       <td><span class="badge badge-primary">${escHtml(label)}</span></td>
       ${courtCells}
-      <td class="text-sm" style="white-space:nowrap">${outPlayers || '<span class="text-muted">None</span>'}</td>
+      <td class="text-sm" style="white-space:nowrap">${outPlayers || '<span class="text-muted">N/A</span>'}</td>
     </tr>`;
   }).join('');
 
   return `${roundGroupTabs}
-  <div class="flex items-center justify-between mb-4">
-    <span class="text-muted text-sm">${progress.done}/${progress.total} games complete</span>
-    <button class="btn btn-sm btn-ghost" data-action="mark-all-remaining" data-rid="${rid}" data-gid="${gid}">Mark all complete</button>
+  <div class="flex items-center justify-between mb-3">
+    ${toggle}
+    <div class="flex items-center gap-3">
+      <span class="text-muted text-sm">${progress.done}/${progress.total} games complete</span>
+      <button class="btn btn-sm btn-ghost" data-action="mark-all-remaining" data-rid="${rid}" data-gid="${gid}">Mark all complete</button>
+    </div>
   </div>
   <div class="table-wrapper">
     <table class="data-table schedule-table">
@@ -1886,6 +1902,12 @@ function handleClick(e) {
 }
 
 function handleInput(e) {
+  // Player number toggle (schedule + scores tabs)
+  if (e.target.dataset.action === 'toggle-player-nums') {
+    App.state.showPlayerNums = e.target.checked;
+    renderView();
+    return;
+  }
   // Live search
   if (e.target.id === 'searchInput') {
     App.state.search = e.target.value;
