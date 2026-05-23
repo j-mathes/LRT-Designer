@@ -1346,8 +1346,9 @@ function viewRoster() {
     <div><h1 class="page-title">Athlete Roster</h1>
       <p class="page-subtitle">${pluralize(App.data.athletes.length,'athlete')} total</p></div>
     <div class="page-actions">
+      <a class="btn btn-ghost" href="roster-template.csv" download="roster-template.csv">CSV Template</a>
       <button class="btn btn-ghost" data-action="import-roster">Import CSV</button>
-      <button class="btn btn-ghost" data-action="export-roster"> Export CSV</button>
+      <button class="btn btn-ghost" data-action="export-roster">Export CSV</button>
       <button class="btn btn-primary" data-action="add-athlete">+ Add Athlete</button>
     </div>
   </div>
