@@ -1194,7 +1194,7 @@ function buildScheduleTable(group, sched, showNum = true) {
       if (!slot) return '<td class="text-muted" style="text-align:center">--</td>';
       const t1 = slot.t1.map(pos => escHtml(playerName(group, pos, showNum))).join('<br>');
       const t2 = slot.t2.map(pos => escHtml(playerName(group, pos, showNum))).join('<br>');
-      return `<td class="teams-cell"><div>${t1}</div><div class="vs-divider">vs</div><div>${t2}</div></td>`;
+      return `<td class="teams-cell"><div class="teams-vs-row"><div>${t1}</div><span class="vs-divider">vs</span><div>${t2}</div></div></td>`;
     }).join('');
     const outPlayers = [...new Set(r.slots.flatMap(s => s.out))]
       .map(pos => escHtml(playerName(group, pos, showNum))).join(', ');
@@ -1254,7 +1254,7 @@ function tabScores(t) {
       const s2 = g.score2 ?? '';
       const doneClass = g.completed ? 'score-row-done' : '';
       return `<td class="score-table-cell ${doneClass}">
-        <div class="score-table-teams"><div>${team1}</div><div class="vs-divider">vs</div><div>${team2}</div></div>
+        <div class="score-table-teams"><div class="teams-vs-row"><div>${team1}</div><span class="vs-divider">vs</span><div>${team2}</div></div></div>
         <div class="score-table-inputs">
           <input class="score-field" type="number" min="0" max="${maxScore}"
             data-game="${g.id}" data-side="1" value="${escHtml(String(s1))}" placeholder="0">

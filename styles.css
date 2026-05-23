@@ -429,7 +429,9 @@ h1,h2,h3,h4,h5,h6 { line-height: 1.25; font-weight: 600; }
 .score-table-inputs .save-score-btn { width: auto; margin-top: 0; white-space: nowrap; }
 
 /* ── vs divider (vertical team stacking) ── */
-.vs-divider { font-size: .75rem; color: var(--clr-text-muted); text-align: center; line-height: 1.4; }
+.teams-vs-row { display: flex; align-items: flex-start; gap: .5rem; }
+.teams-vs-row > div { line-height: 1.5; }
+.vs-divider { font-size: .75rem; color: var(--clr-text-muted); flex-shrink: 0; padding-top: .1rem; }
 
 /* ── Player-number toggle ── */
 .player-num-toggle {
