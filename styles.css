@@ -429,9 +429,9 @@ h1,h2,h3,h4,h5,h6 { line-height: 1.25; font-weight: 600; }
 .score-table-inputs .save-score-btn { width: auto; margin-top: 0; white-space: nowrap; }
 
 /* ── vs divider (vertical team stacking) ── */
-.teams-vs-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; gap: .35rem; }
-.teams-vs-row > div { line-height: 1.5; }
-.vs-divider { font-size: .75rem; color: var(--clr-text-muted); padding-top: .1rem; text-align: center; }
+.teams-vs-row { display: flex; align-items: flex-start; gap: .4rem; }
+.teams-vs-row > div { flex: 1; line-height: 1.5; }
+.vs-divider { font-size: .75rem; color: var(--clr-text-muted); flex-shrink: 0; padding-top: .1rem; }
 
 /* ── Player-number toggle ── */
 .player-num-toggle {
