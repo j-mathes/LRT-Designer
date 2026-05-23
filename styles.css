@@ -732,6 +732,18 @@ h1,h2,h3,h4,h5,h6 { line-height: 1.25; font-weight: 600; }
 }
 .print-only { display: none; }
 
+/* ── Footer ── */
+.app-footer {
+  text-align: center;
+  padding: .75rem 1rem;
+  font-size: .75rem;
+  color: var(--clr-text-muted);
+  border-top: 1px solid var(--clr-border);
+  margin-top: 2rem;
+}
+.app-footer a { color: var(--clr-accent); text-decoration: none; }
+.app-footer a:hover { text-decoration: underline; }
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   :root { --header-h: 56px; }
