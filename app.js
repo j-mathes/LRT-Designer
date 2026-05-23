@@ -1529,7 +1529,7 @@ function printSchedule(tid) {
             <td>${slot.court}</td>
             <td>${t1Names}</td><td style="text-align:center">vs</td>
             <td>${t2Names}</td>
-            <td>${outNames || ''}</td>
+            <td>${outNames || 'N/A'}</td>
           </tr>`;
         }).join('')
       ).join('') : '';
