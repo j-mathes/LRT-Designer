@@ -430,8 +430,11 @@ h1,h2,h3,h4,h5,h6 { line-height: 1.25; font-weight: 600; }
 
 /* ── vs divider (vertical team stacking) ── */
 .teams-vs-row { display: flex; align-items: flex-start; gap: .4rem; }
-.teams-vs-row > div { flex: 1; line-height: 1.5; }
+.teams-vs-row > div { flex: 1; }
 .vs-divider { font-size: .75rem; color: var(--clr-text-muted); flex-shrink: 0; padding-top: .1rem; }
+/* player number + name alignment */
+.player-row { display: flex; gap: .2rem; line-height: 1.5; font-size: .85rem; }
+.player-pos { min-width: 2.6em; text-align: right; flex-shrink: 0; color: var(--clr-text-muted); font-variant-numeric: tabular-nums; }
 
 /* ── Player-number toggle ── */
 .player-num-toggle {

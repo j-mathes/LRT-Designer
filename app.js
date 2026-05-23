@@ -1192,8 +1192,8 @@ function buildScheduleTable(group, sched, showNum = true) {
     const courtCells = Array.from({length: maxCourt}, (_, i) => {
       const slot = r.slots.find(s => s.court === i + 1);
       if (!slot) return '<td class="text-muted" style="text-align:center">--</td>';
-      const t1 = slot.t1.map(pos => escHtml(playerName(group, pos, showNum))).join('<br>');
-      const t2 = slot.t2.map(pos => escHtml(playerName(group, pos, showNum))).join('<br>');
+      const t1 = slot.t1.map(pos => playerNameHtml(group, pos, showNum)).join('');
+      const t2 = slot.t2.map(pos => playerNameHtml(group, pos, showNum)).join('');
       return `<td class="teams-cell"><div class="teams-vs-row"><div>${t1}</div><span class="vs-divider">vs</span><div>${t2}</div></div></td>`;
     }).join('');
     const outPlayers = [...new Set(r.slots.flatMap(s => s.out))]
@@ -1215,6 +1215,14 @@ function playerName(group, pos, showNum = true) {
   const p = group.players.find(p => p.pos === pos);
   if (p) return showNum ? `#${pos} ${p.name}` : p.name;
   return showNum ? `#${pos}` : '?';
+}
+
+// Returns an HTML <div> row with number and name in aligned columns
+function playerNameHtml(group, pos, showNum) {
+  const p = group.players.find(pl => pl.pos === pos);
+  const name = escHtml(p ? p.name : '?');
+  if (!showNum) return `<div class="player-row">${name}</div>`;
+  return `<div class="player-row"><span class="player-pos">#${pos}</span><span>${name}</span></div>`;
 }
 
 //  Scores Tab 
@@ -1248,8 +1256,8 @@ function tabScores(t) {
     const courtCells = Array.from({length: maxCourt}, (_, i) => {
       const g = group.games.find(gm => gm.gameLabel === label && gm.courtNum === i + 1);
       if (!g) return '<td class="text-muted" style="text-align:center">--</td>';
-      const team1 = g.t1.map(pos => escHtml(playerName(group, pos, showNum))).join('<br>');
-      const team2 = g.t2.map(pos => escHtml(playerName(group, pos, showNum))).join('<br>');
+      const team1 = g.t1.map(pos => playerNameHtml(group, pos, showNum)).join('');
+      const team2 = g.t2.map(pos => playerNameHtml(group, pos, showNum)).join('');
       const s1 = g.score1 ?? '';
       const s2 = g.score2 ?? '';
       const doneClass = g.completed ? 'score-row-done' : '';
