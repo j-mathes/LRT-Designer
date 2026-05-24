@@ -8,37 +8,44 @@ A static web app for organizing **Bjerring Linear Ranking Tournaments** — a ro
 
 ## Usage
 
-Open `index.html` in any modern browser — no server or build step required. Can also be hosted on GitHub Pages.
+Open the [live app](https://j-mathes.github.io/LRT-Designer/) or open `index.html` locally in any modern browser — no server or build step required.
 
 ---
 
 ## Features
 
-- 5-step tournament wizard with quick-add numbered players or named roster
-- 9 built-in schedules: 4–25 players, doubles (2v2) or triples (3v3), 1–5 courts
-- Two methods: **Single Closed Cell** (one group) or **Sort & Sift** (multi-round, re-grouped by rank)
-- Live score entry with automatic standings (sorted by W → points differential)
-- Print-ready schedule sheets, scoresheets, and rule sheets
-- Export: JSON, CSV, XLSX (standings); full app backup/restore
-- Data stored in `localStorage` (IndexedDB fallback); no account needed
+- **5-step tournament wizard** — name/date, athletes, format, scoring, review
+- **9 built-in Bjerring schedules** — 4–25 players, doubles (2v2) or triples (3v3), 1–5 courts
+- **Two tournament methods**
+  - *Single Closed Cell* — one group, everyone plays everyone
+  - *Sort & Sift* — multi-round, players re-grouped by ranking after each round
+- **Schedule & Scores tabs** — row-per-round, column-per-court table layout; toggle player numbers on/off
+- **Live score entry** — per-game inline inputs with score cap enforcement; standings update automatically
+- **Standings** — W/L/+− sorted with rank badges; tiebreak by points differential
+- **Athlete roster** — persistent player database reusable across tournaments
+- **Print support** — schedule sheets, scoresheets (with schedule reference), and rule sheets
+- **Export / Import** — per-tournament JSON/CSV/XLSX; full app backup/restore JSON; roster CSV
+- **Persistent storage** — localStorage primary, IndexedDB fallback; no account needed
+- **Multiple active tournaments** — run and switch between any number simultaneously
+- **Responsive** — works on desktop, tablet, and mobile
 
 ---
 
 ## Built-in Schedules
 
-| Players | Type    | Courts | Games |
-|---------|---------|--------|-------|
-| 4       | Doubles | 1      | 3     |
-| 5       | Doubles | 1      | 5     |
-| 7       | Triples | 1      | 7     |
-| 8       | Doubles | 2      | 7     |
-| 9       | Triples | 1      | 12    |
-| 12      | Doubles | 2      | 17    |
-| 12      | Doubles | 3      | 11    |
-| 16      | Doubles | 4      | 15    |
-| 25      | Doubles | 5      | 30    |
+| Players | Type    | Courts | Rounds |
+|---------|---------|--------|--------|
+| 4       | Doubles | 1      | 3      |
+| 5       | Doubles | 1      | 5      |
+| 7       | Triples | 1      | 7      |
+| 8       | Doubles | 2      | 7      |
+| 9       | Triples | 1      | 12     |
+| 12      | Doubles | 2      | 17     |
+| 12      | Doubles | 3      | 11     |
+| 16      | Doubles | 4      | 15     |
+| 25      | Doubles | 5      | 30     |
 
-Other player counts use Sort & Sift to split into groups.
+Other player counts use Sort & Sift to split into appropriately sized groups.
 
 ---
 
@@ -46,7 +53,7 @@ Other player counts use Sort & Sift to split into groups.
 
 ```
 index.html          — app shell
-app.js              — all logic (vanilla ES6+, no frameworks)
+app.js              — all logic (vanilla ES6+, no frameworks, ~2100 lines)
 styles.css          — all styles
 roster-template.csv — sample CSV for roster import
 ```
@@ -58,26 +65,6 @@ roster-template.csv — sample CSV for roster import
 **CC BY-NC-SA 4.0** — free to share and adapt for non-commercial use with attribution.  
 See [LICENSE](LICENSE) for full terms.
 
-
----
-
-## Features
-
-- **Tournament Wizard** — 5-step guided setup: name/date, athletes, format selection, scoring, review
-- **9 Built-in Schedules** — covers 4–25 players across doubles and triples formats (1–5 courts)
-- **Two Tournament Methods**
-  - *Single Closed Cell* — one round, everyone plays everyone
-  - *Sort & Sift* — multi-round, players re-grouped by ranking each round
-- **Live Score Entry** — enter scores per game; standings update automatically
-- **Standings & Rankings** — W/L/+− sorted tables with 🥇🥈🥉 indicators
-- **Athlete Roster** — persistent player database; reuse across tournaments
-- **Print Support** — schedule sheets, scoresheets, and rule sheets (print-friendly layouts)
-- **Export / Import**
-  - Tournament: JSON, CSV (standings), XLSX (via SheetJS)
-  - Roster: CSV
-  - Full app backup: JSON
-- **Persistent Storage** — localStorage primary, IndexedDB fallback
-- **Responsive** — works on desktop, iPad, and iPhone
 - **No build step** — open `index.html` directly or host on GitHub Pages
 
 ---
