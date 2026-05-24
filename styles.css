@@ -758,7 +758,7 @@ h1,h2,h3,h4,h5,h6 { line-height: 1.25; font-weight: 600; }
     border: 1px solid #000; padding: 3pt 5pt; text-align: center;
   }
   .print-table td.name-col { text-align: left; }
-  .print-score-box { width: 28pt; height: 14pt; border: 1px solid #555; display: inline-block; }
+  .print-score-box { width: 28pt; height: 14pt; display: inline-block; }
 
   .print-rules { font-size: 9.5pt; line-height: 1.5; }
   .print-rules h3 { font-size: 11pt; margin: 8pt 0 4pt; }
