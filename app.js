@@ -294,7 +294,7 @@ function escHtml(s) {
 }
 function formatDate(ts) {
   if (!ts) return '';
-  return new Date(ts).toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' });
+  return new Date(ts).toISOString().slice(0, 10);
 }
 function formatDateInput(ts) {
   if (!ts) return new Date().toISOString().slice(0,10);
