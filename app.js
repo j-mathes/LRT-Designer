@@ -1518,38 +1518,54 @@ function printSchedule(tid) {
     r.groups.map((group, gi) => {
       const sched = SCHEDULES[group.scheduleId];
       const showLabel = t.rounds.length > 1 || r.groups.length > 1;
-      const groupTitle = showLabel ? `  ${r.label} Group ${group.label}` : '';
-      const rows = sched ? sched.rounds.map(round =>
-        round.slots.map(slot => {
-          const t1Names = slot.t1.map(p => printPlayerName(group, p)).join(' & ');
-          const t2Names = slot.t2.map(p => printPlayerName(group, p)).join(' & ');
-          const outNames = slot.out.map(p => printPlayerName(group, p)).join(', ');
-          return `<tr>
-            <td style="font-weight:bold;text-align:center">${round.label}</td>
-            <td>${slot.court}</td>
-            <td>${t1Names}</td><td style="text-align:center">vs</td>
-            <td>${t2Names}</td>
-            <td>${outNames || 'N/A'}</td>
-          </tr>`;
-        }).join('')
-      ).join('') : '';
+      const groupTitle = showLabel ? ` \u2014 ${r.label} Group ${group.label}` : '';
+      if (!sched) return `<div class="print-page"><div class="print-title">No schedule.</div></div>`;
+
+      const maxCourt = Math.max(...sched.rounds.flatMap(r => r.slots.map(s => s.court)));
+      const courtHeaders = Array.from({length: maxCourt}, (_, i) =>
+        `<th style="text-align:center">Court ${i + 1}</th>`).join('');
+
+      const rows = sched.rounds.map(round => {
+        const courtCells = Array.from({length: maxCourt}, (_, ci) => {
+          const slot = round.slots.find(s => s.court === ci + 1);
+          if (!slot) return '<td style="text-align:center">--</td>';
+          const t1 = slot.t1.map(p => printPlayerName(group, p)).join('<br>');
+          const t2 = slot.t2.map(p => printPlayerName(group, p)).join('<br>');
+          return `<td style="text-align:center">
+            <div style="display:inline-grid;grid-template-columns:max-content auto max-content;align-items:start;gap:5pt;text-align:left">
+              <div>${t1}</div>
+              <div style="font-size:7pt;color:#666;padding-top:1pt;text-align:center">vs</div>
+              <div>${t2}</div>
+            </div>
+          </td>`;
+        }).join('');
+
+        const outPlayers = [...new Set(round.slots.flatMap(s => s.out))]
+          .map(p => printPlayerName(group, p)).join(', ');
+
+        return `<tr>
+          <td style="font-weight:bold;text-align:center">${round.label}</td>
+          ${courtCells}
+          <td style="text-align:center">${outPlayers || 'N/A'}</td>
+        </tr>`;
+      }).join('');
 
       return `<div class="print-page">
-        <div class="print-title">LINEAR RANKING TOURNAMENT  SCHEDULE${groupTitle}</div>
-        <div class="print-subtitle">${t.name}  ${t.sport||''}  ${formatDate(new Date(t.date).getTime())}</div>
+        <div class="print-title">LINEAR RANKING TOURNAMENT \u2014 SCHEDULE${groupTitle}</div>
+        <div class="print-subtitle">${t.name} \u2014 ${t.sport||''} \u2014 ${formatDate(new Date(t.date).getTime())}</div>
         <div class="print-subtitle">
-          ${t.scoringType==='timed'?`Timed  ${t.timeLimitMinutes} min`:
+          ${t.scoringType==='timed'?`Timed \u2014 ${t.timeLimitMinutes} min`:
             `First to ${t.pointsTarget}${t.winBy2?' (win by 2)':''}`} |
           Format: ${t.format}
         </div>
         <br>
         <table class="print-table">
-          <thead><tr><th>Round</th><th>Court</th><th>Team 1</th><th>vs</th><th>Team 2</th><th>Out</th></tr></thead>
+          <thead><tr><th>Round</th>${courtHeaders}<th>Out</th></tr></thead>
           <tbody>${rows}</tbody>
         </table>
         <br>
         <div style="font-size:8pt;color:#555">
-          Players: ${group.players.map(p => `#${p.pos} ${p.name}`).join('  ')}
+          Players: ${group.players.map(p => `#${p.pos} ${p.name}`).join(' \u2022 ')}
         </div>
       </div>`;
     }).join('')
