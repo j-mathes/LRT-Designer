@@ -1534,9 +1534,9 @@ function printSchedule(tid) {
           return `<td style="padding:3pt 4pt">
             <table style="border-collapse:collapse;width:100%;table-layout:fixed">
               <tr>
-                <td style="width:45%;text-align:right;vertical-align:top;padding-right:3pt">${t1}</td>
-                <td style="width:10%;text-align:center;vertical-align:middle;color:#888;font-size:7pt">vs</td>
-                <td style="width:45%;text-align:left;vertical-align:top;padding-left:3pt">${t2}</td>
+                <td style="width:45%;text-align:right;vertical-align:top;padding-right:3pt;border:none">${t1}</td>
+                <td style="width:10%;text-align:center;vertical-align:middle;color:#888;font-size:7pt;border:none">vs</td>
+                <td style="width:45%;text-align:left;vertical-align:top;padding-left:3pt;border:none">${t2}</td>
               </tr>
             </table>
           </td>`;
