@@ -425,7 +425,7 @@ h1,h2,h3,h4,h5,h6 { line-height: 1.25; font-weight: 600; }
 .score-table-cell { padding: .5rem .75rem !important; vertical-align: top; }
 .score-table-cell.score-row-done { background: #f0fff4; }
 .score-table-teams { font-size: .85rem; font-weight: 600; margin-bottom: .4rem; text-align: center; }
-.score-table-inputs { display: flex; align-items: center; gap: .35rem; }
+.score-table-inputs { display: flex; align-items: center; justify-content: center; gap: .35rem; }
 .score-table-inputs .score-field { width: 54px; flex: none; font-size: .95rem; padding: .3rem .25rem; }
 .score-table-inputs .save-score-btn { width: auto; margin-top: 0; white-space: nowrap; }
 
