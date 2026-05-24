@@ -1136,7 +1136,7 @@ function viewTournamentDetail() {
   const completeBtn = t.status === 'active'
     ? `<button class="btn btn-success" data-action="complete-tournament" data-id="${t.id}"> Mark Complete</button>`
     : t.status === 'completed'
-      ? `<span class="badge badge-success">Completed ${formatDate(t.completedAt)}</span>`
+      ? `<span style="display:inline-flex;flex-direction:column;align-items:center;gap:.15rem"><span class="badge badge-success">Completed</span><span class="text-sm text-muted">${formatDate(t.completedAt)}</span></span>`
       : `<button class="btn btn-primary" data-action="start-tournament" data-id="${t.id}"> Start Tournament</button>`;
 
   return `<div class="page-header">
