@@ -1531,12 +1531,14 @@ function printSchedule(tid) {
           if (!slot) return '<td style="text-align:center">--</td>';
           const t1 = slot.t1.map(p => printPlayerName(group, p)).join('<br>');
           const t2 = slot.t2.map(p => printPlayerName(group, p)).join('<br>');
-          return `<td style="text-align:center">
-            <div style="display:inline-grid;grid-template-columns:max-content auto max-content;align-items:start;gap:5pt;text-align:left">
-              <div>${t1}</div>
-              <div style="font-size:7pt;color:#666;padding-top:1pt;text-align:center">vs</div>
-              <div>${t2}</div>
-            </div>
+          return `<td style="padding:3pt 4pt">
+            <table style="border-collapse:collapse;width:100%;table-layout:fixed">
+              <tr>
+                <td style="width:45%;text-align:right;vertical-align:top;padding-right:3pt">${t1}</td>
+                <td style="width:10%;text-align:center;vertical-align:middle;color:#888;font-size:7pt">vs</td>
+                <td style="width:45%;text-align:left;vertical-align:top;padding-left:3pt">${t2}</td>
+              </tr>
+            </table>
           </td>`;
         }).join('');
 
