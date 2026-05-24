@@ -1514,6 +1514,7 @@ function viewSettings() {
 function printSchedule(tid) {
   const t = findTournament(tid);
   if (!t) return;
+  const showNum = App.state.showPlayerNums;
   const pages = t.rounds.map((r, ri) =>
     r.groups.map((group, gi) => {
       const sched = SCHEDULES[group.scheduleId];
@@ -1529,8 +1530,8 @@ function printSchedule(tid) {
         const courtCells = Array.from({length: maxCourt}, (_, ci) => {
           const slot = round.slots.find(s => s.court === ci + 1);
           if (!slot) return '<td style="text-align:center">--</td>';
-          const t1 = slot.t1.map(p => printPlayerName(group, p)).join('<br>');
-          const t2 = slot.t2.map(p => printPlayerName(group, p)).join('<br>');
+          const t1 = slot.t1.map(p => printPlayerName(group, p, showNum)).join('<br>');
+          const t2 = slot.t2.map(p => printPlayerName(group, p, showNum)).join('<br>');
           return `<td style="padding:3pt 4pt">
             <table style="border-collapse:collapse;width:100%;table-layout:fixed">
               <tr>
@@ -1543,7 +1544,7 @@ function printSchedule(tid) {
         }).join('');
 
         const outPlayers = [...new Set(round.slots.flatMap(s => s.out))]
-          .map(p => printPlayerName(group, p)).join(', ');
+          .map(p => printPlayerName(group, p, showNum)).join(', ');
 
         return `<tr>
           <td style="font-weight:bold;text-align:center">${round.label}</td>
@@ -1567,7 +1568,7 @@ function printSchedule(tid) {
         </table>
         <br>
         <div style="font-size:8pt;color:#555">
-          Players: ${group.players.map(p => `#${p.pos} ${p.name}`).join(' \u2022 ')}
+          Players: ${group.players.map(p => showNum ? `#${p.pos} ${p.name}` : p.name).join(' \u2022 ')}
         </div>
       </div>`;
     }).join('')
@@ -1579,6 +1580,7 @@ function printSchedule(tid) {
 function printScoresheet(tid) {
   const t = findTournament(tid);
   if (!t) return;
+  const showNum = App.state.showPlayerNums;
   const pages = t.rounds.map((r, ri) =>
     r.groups.map((group, gi) => {
       const sched = SCHEDULES[group.scheduleId];
@@ -1593,11 +1595,11 @@ function printScoresheet(tid) {
         const courtCells = Array.from({length: schedMaxCourt}, (_, ci) => {
           const slot = round.slots.find(s => s.court === ci+1);
           if (!slot) return '<td style="text-align:center">--</td>';
-          const t1 = slot.t1.map(p => printPlayerName(group, p)).join(' &amp; ');
-          const t2 = slot.t2.map(p => printPlayerName(group, p)).join(' &amp; ');
+          const t1 = slot.t1.map(p => printPlayerName(group, p, showNum)).join(' &amp; ');
+          const t2 = slot.t2.map(p => printPlayerName(group, p, showNum)).join(' &amp; ');
           return `<td style="text-align:left">${t1} v ${t2}</td>`;
         }).join('');
-        const out = [...new Set(round.slots.flatMap(s => s.out))].map(p => printPlayerName(group, p)).join(', ');
+        const out = [...new Set(round.slots.flatMap(s => s.out))].map(p => printPlayerName(group, p, showNum)).join(', ');
         return `<tr><td style="font-weight:bold;text-align:center">${round.label}</td>${courtCells}<td>${out||'N/A'}</td></tr>`;
       }).join('') : '';
       const schedTable = sched ? `
@@ -1699,9 +1701,10 @@ function printRuleSheet(tid) {
   doPrint(html);
 }
 
-function printPlayerName(group, pos) {
+function printPlayerName(group, pos, showNum = true) {
   const p = group.players.find(p => p.pos === pos);
-  return p ? `#${pos} ${p.name}` : `#${pos}`;
+  if (!p) return showNum ? `#${pos}` : String(pos);
+  return showNum ? `#${pos} ${p.name}` : p.name;
 }
 
 function computePlayerStat(group, pos) {
