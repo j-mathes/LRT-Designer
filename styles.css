@@ -349,6 +349,8 @@ h1,h2,h3,h4,h5,h6 { line-height: 1.25; font-weight: 600; }
 .data-table .rank-3 { color: #c05621; }
 .data-table .score-cell { text-align: center; font-family: var(--font-mono); }
 .data-table .name-cell { font-weight: 600; }
+/* standings: center all headers except Player */
+.standings-table th:not(:nth-child(2)) { text-align: center; }
 
 /* ── Scoresheet Table ── */
 .scoresheet-table {

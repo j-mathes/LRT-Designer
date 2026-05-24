@@ -1329,7 +1329,7 @@ function tabStandings(t) {
       </tr>`;
     }).join('');
     return `${header}<div class="table-wrapper mb-4">
-      <table class="data-table">
+      <table class="data-table standings-table">
         <thead><tr>
           <th>Rank</th><th>Player</th><th>W</th><th>L</th><th>Pts +/-</th><th>GP</th>
         </tr></thead>
